@@ -22,43 +22,6 @@ public class DynamicArray<E> {
         this.size = 0;
     }
 
-    // Main method for testing
-    public static void main(String[] args) {
-        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
-
-        // Adding elements
-        dynamicArray.add(10);
-        dynamicArray.add(20);
-        dynamicArray.add(30);
-        dynamicArray.add(40);
-
-        // Print array
-        dynamicArray.printArray(); // [10, 20, 30, 40]
-
-        // Get element at index
-        System.out.println("Element at index 2: " + dynamicArray.get(2)); // 30
-
-        // Set element at index 1
-        dynamicArray.set(1, 25);
-        dynamicArray.printArray(); // [10, 25, 30, 40]
-
-        // Remove element at index 0
-        dynamicArray.remove(0);
-        dynamicArray.printArray(); // [25, 30, 40]
-
-        // Remove element by value
-        dynamicArray.remove(Integer.valueOf(30));
-        dynamicArray.printArray(); // [25, 40]
-
-        // Check if an element exists
-        System.out.println("Contains 40: " + dynamicArray.contains(40)); // true
-        System.out.println("Contains 30: " + dynamicArray.contains(30)); // false
-
-        // Get index of element
-        System.out.println("Index of 40: " + dynamicArray.indexOf(40)); // 1
-        System.out.println("Index of 30: " + dynamicArray.indexOf(30)); // -1
-    }
-
     // Add an element to the dynamic array
     public void add(E element) {
         ensureCapacity(size + 1); // Ensure there is enough capacity
@@ -154,5 +117,42 @@ public class DynamicArray<E> {
             }
         }
         System.out.println("]");
+    }
+
+    // Main method for testing
+    public static void main(String[] args) {
+        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+
+        // Adding elements
+        dynamicArray.add(10);
+        dynamicArray.add(20);
+        dynamicArray.add(30);
+        dynamicArray.add(40);
+
+        // Print array
+        dynamicArray.printArray(); // [10, 20, 30, 40]
+
+        // Get element at index
+        System.out.println("Element at index 2: " + dynamicArray.get(2)); // 30
+
+        // Set element at index 1
+        dynamicArray.set(1, 25);
+        dynamicArray.printArray(); // [10, 25, 30, 40]
+
+        // Remove element at index 0
+        dynamicArray.remove(0);
+        dynamicArray.printArray(); // [25, 30, 40]
+
+        // Remove element by value
+        dynamicArray.remove(Integer.valueOf(30));
+        dynamicArray.printArray(); // [25, 40]
+
+        // Check if an element exists
+        System.out.println("Contains 40: " + dynamicArray.contains(40)); // true
+        System.out.println("Contains 30: " + dynamicArray.contains(30)); // false
+
+        // Get index of element
+        System.out.println("Index of 40: " + dynamicArray.indexOf(40)); // 1
+        System.out.println("Index of 30: " + dynamicArray.indexOf(30)); // -1
     }
 }
