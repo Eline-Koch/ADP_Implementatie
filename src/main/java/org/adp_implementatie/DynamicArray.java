@@ -1,6 +1,5 @@
 package org.adp_implementatie;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,19 +13,11 @@ import java.util.Map;
 
 public class DynamicArray<E> {
     private static final int DEFAULT_CAPACITY = 10;
-    private Object[] array;
+    private E[] array;
     private int size;
 
     public DynamicArray() {
-        this.array = new Object[DEFAULT_CAPACITY];
-        this.size = 0;
-    }
-
-    public DynamicArray(int initialCapacity) {
-        if (initialCapacity <= 0) {
-            throw new IllegalArgumentException("Capacity must be greater than 0.");
-        }
-        this.array = new Object[initialCapacity];
+        this.array = (E[]) new Object[DEFAULT_CAPACITY];
         this.size = 0;
     }
 
@@ -35,12 +26,11 @@ public class DynamicArray<E> {
         array[size++] = element;
     }
 
-    @SuppressWarnings("unchecked")
     public E get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
-        return (E) array[index];
+        return array[index];
     }
 
     public void set(int index, E element) {
@@ -54,7 +44,6 @@ public class DynamicArray<E> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
-        @SuppressWarnings("unchecked")
         E removedElement = (E) array[index];
         System.arraycopy(array, index + 1, array, index, size - index - 1);
         array[--size] = null;
@@ -115,6 +104,35 @@ public class DynamicArray<E> {
     }
 
     public static void main(String[] args) throws IOException {
+        // basic tests
+        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+
+        dynamicArray.add(10);
+        dynamicArray.add(20);
+        dynamicArray.add(30);
+        dynamicArray.add(40);
+
+        dynamicArray.printArray(); // [10, 20, 30, 40]
+
+        System.out.println("Element at index 2: " + dynamicArray.get(2)); // 30
+
+        dynamicArray.set(1, 25);
+        dynamicArray.printArray(); // [10, 25, 30, 40]
+
+        dynamicArray.remove(0);
+        dynamicArray.printArray(); // [25, 30, 40]
+
+        dynamicArray.remove(Integer.valueOf(30));
+        dynamicArray.printArray(); // [25, 40]
+
+        System.out.println("Contains 40: " + dynamicArray.contains(40)); // true
+        System.out.println("Contains 30: " + dynamicArray.contains(30)); // false
+
+        System.out.println("Index of 40: " + dynamicArray.indexOf(40)); // 1
+        System.out.println("Index of 30: " + dynamicArray.indexOf(30)); // -1
+
+
+        //dataset performance tests
         String dataString = Files.readString(Path.of("src/main/resources/dataset_sorteren.json"), Charset.defaultCharset());
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -123,29 +141,5 @@ public class DynamicArray<E> {
         dataMap.forEach((key, value) -> System.out.println(key + " " + value));
         dataMap.forEach((key, value) -> System.out.println(value));
         dataMap.forEach((key, value) -> System.out.println(value.get(0)));
-
-//        dynamicArray.add(10);
-//        dynamicArray.add(20);
-//        dynamicArray.add(30);
-//        dynamicArray.add(40);
-//
-//        dynamicArray.printArray(); // [10, 20, 30, 40]
-//
-//        System.out.println("Element at index 2: " + dynamicArray.get(2)); // 30
-//
-//        dynamicArray.set(1, 25);
-//        dynamicArray.printArray(); // [10, 25, 30, 40]
-//
-//        dynamicArray.remove(0);
-//        dynamicArray.printArray(); // [25, 30, 40]
-//
-//        dynamicArray.remove(Integer.valueOf(30));
-//        dynamicArray.printArray(); // [25, 40]
-//
-//        System.out.println("Contains 40: " + dynamicArray.contains(40)); // true
-//        System.out.println("Contains 30: " + dynamicArray.contains(30)); // false
-//
-//        System.out.println("Index of 40: " + dynamicArray.indexOf(40)); // 1
-//        System.out.println("Index of 30: " + dynamicArray.indexOf(30)); // -1
     }
 }
