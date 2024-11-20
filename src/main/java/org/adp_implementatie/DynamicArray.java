@@ -104,42 +104,60 @@ public class DynamicArray<E> {
     }
 
     public static void main(String[] args) throws IOException {
-        // basic tests
-        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+//        // basic tests
+//        System.out.println();
+//        System.out.println("basic tests");
 
-        dynamicArray.add(10);
-        dynamicArray.add(20);
-        dynamicArray.add(30);
-        dynamicArray.add(40);
+//        DynamicArray<Integer> basicDynamicArray = new DynamicArray<>();
+//
+//        dynamicArray.add(10);
+//        dynamicArray.add(20);
+//        dynamicArray.add(30);
+//        dynamicArray.add(40);
+//
+//        dynamicArray.printArray(); // [10, 20, 30, 40]
+//
+//        System.out.println("Element at index 2: " + dynamicArray.get(2)); // 30
+//
+//        dynamicArray.set(1, 25);
+//        dynamicArray.printArray(); // [10, 25, 30, 40]
+//
+//        dynamicArray.remove(0);
+//        dynamicArray.printArray(); // [25, 30, 40]
+//
+//        dynamicArray.remove(Integer.valueOf(30));
+//        dynamicArray.printArray(); // [25, 40]
+//
+//        System.out.println("Contains 40: " + dynamicArray.contains(40)); // true
+//        System.out.println("Contains 30: " + dynamicArray.contains(30)); // false
+//
+//        System.out.println("Index of 40: " + dynamicArray.indexOf(40)); // 1
+//        System.out.println("Index of 30: " + dynamicArray.indexOf(30)); // -1
 
-        dynamicArray.printArray(); // [10, 20, 30, 40]
+        //dataset tests
+        System.out.println();
+        System.out.println("dataset tests");
 
-        System.out.println("Element at index 2: " + dynamicArray.get(2)); // 30
-
-        dynamicArray.set(1, 25);
-        dynamicArray.printArray(); // [10, 25, 30, 40]
-
-        dynamicArray.remove(0);
-        dynamicArray.printArray(); // [25, 30, 40]
-
-        dynamicArray.remove(Integer.valueOf(30));
-        dynamicArray.printArray(); // [25, 40]
-
-        System.out.println("Contains 40: " + dynamicArray.contains(40)); // true
-        System.out.println("Contains 30: " + dynamicArray.contains(30)); // false
-
-        System.out.println("Index of 40: " + dynamicArray.indexOf(40)); // 1
-        System.out.println("Index of 30: " + dynamicArray.indexOf(30)); // -1
-
-
-        //dataset performance tests
         String dataString = Files.readString(Path.of("src/main/resources/dataset_sorteren.json"), Charset.defaultCharset());
-
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, List<Object>> dataMap = objectMapper.readValue(dataString, new TypeReference<Map<String, List<Object>>>(){});
+        Map<String, List<Object>> dataMap = objectMapper.readValue(dataString, new TypeReference<>(){});
 
-        dataMap.forEach((key, value) -> System.out.println(key + " " + value));
-        dataMap.forEach((key, value) -> System.out.println(value));
-        dataMap.forEach((key, value) -> System.out.println(value.get(0)));
+        for (Map.Entry<String, List<Object>> entry : dataMap.entrySet()) {
+            String key = entry.getKey();
+            List<Object> value = entry.getValue();
+
+            DynamicArray<Object> dynamicArray = new DynamicArray<>();
+            for (Object o : value) {
+                dynamicArray.add(o);
+            }
+
+            dynamicArray.printArray();
+        }
+
+        //performance tests
+        System.out.println();
+        System.out.println("performance tests");
+
+
     }
 }
