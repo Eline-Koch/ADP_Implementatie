@@ -11,6 +11,12 @@ import java.util.Map;
 import java.util.Random;
 
 public class DynamicArrayTest {
+    public static void main(String[] args) throws IOException {
+        DynamicArrayTest test = new DynamicArrayTest();
+
+        test.performDataSetTest();
+        test.performPerformanceTest();
+    }
 
     public void performDataSetTest () throws IOException {
         System.out.println();
@@ -36,38 +42,63 @@ public class DynamicArrayTest {
     public void performPerformanceTest() {
         System.out.println();
         System.out.println("performance tests");
+        System.out.println("add");
 
-        this.performAddPerformanceTest(1000);
-        this.performAddPerformanceTest(10000);
-        this.performAddPerformanceTest(100000);
+        int[] testNums = {1000, 10000, 100000};
 
-//        System.out.println();
-//        System.out.println("get");
-//
-//        startingTime= System.nanoTime();
-//        for(int i = 0; i < dynamicArray1.size(); i++){
-//            dynamicArray1.get(rn.nextInt(dynamicArray1.size()));
-//        }
-//        System.out.println(System.nanoTime() - startingTime);
+        for (int num: testNums) {
+            this.performAddPerformanceTest(num);
+        }
 
-        //set
+        System.out.println();
+        System.out.println("get");
 
-        //remove(int index)
+        for (int size : testNums) {
+            for (int num: testNums) {
+                this.performGetPerformanceTest(size, num);
+            }
+        }
 
-        //remove(E element)
+        System.out.println();
+        System.out.println("set");
 
-        //contains(E element)
+        for (int size : testNums) {
+            for (int num: testNums) {
+                this.performSetPerformanceTest(size, num);
+            }
+        }
 
-        //indexOf(E element)
+        System.out.println();
+        System.out.println("remove(index)");
+
+        for (int num: testNums) {
+            this.performRemoveIndexPerformanceTest(200000, num);
+        }
+
+        System.out.println();
+        System.out.println("remove(element)");
+
+        for (int num: testNums) {
+            this.performRemoveElementPerformanceTest(200000, num);
+        }
+
+        System.out.println();
+        System.out.println("contains");
+
+
+
+        System.out.println();
+        System.out.println("indexOf(element)");
+
+
+
 
     }
 
     public void performAddPerformanceTest(int numOperations) {
-        System.out.println();
-        System.out.println("add");
-
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
         Random rn = new Random();
+
         long startingTime= System.nanoTime();
         for(int i = 0; i < numOperations; i++){
             dynamicArray.add(rn.nextInt());
@@ -76,15 +107,67 @@ public class DynamicArrayTest {
         System.out.println(System.nanoTime() - startingTime);
     }
 
-    public void performGetPerformanceTest(int numOperations) {
-        System.out.println();
-        System.out.println("get");
+    public void performGetPerformanceTest(int arraySize, int numOperations) {
+        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+
+        Random rn = new Random();
+        for(int i = 0; i < arraySize; i++){
+            dynamicArray.add(rn.nextInt());
+        }
+
+        long startingTime= System.nanoTime();
+        for(int i = 0; i < numOperations; i++){
+            dynamicArray.get(rn.nextInt(dynamicArray.size()));
+        }
+
+        System.out.println(System.nanoTime() - startingTime);
     }
 
-    public static void main(String[] args) throws IOException {
-        DynamicArrayTest test = new DynamicArrayTest();
-        test.performDataSetTest();
-        test.performPerformanceTest();
+    public void performSetPerformanceTest(int arraySize, int numOperations) {
+        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
 
+        Random rn = new Random();
+        for(int i = 0; i < arraySize; i++){
+            dynamicArray.add(rn.nextInt());
+        }
+
+        long startingTime= System.nanoTime();
+        for(int i = 0; i < numOperations; i++){
+            dynamicArray.set(rn.nextInt(dynamicArray.size()), rn.nextInt());
+        }
+
+        System.out.println(System.nanoTime() - startingTime);
+    }
+
+    public void performRemoveIndexPerformanceTest(int arraySize, int numOperations) {
+        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+
+        Random rn = new Random();
+        for(int i = 0; i < arraySize; i++){
+            dynamicArray.add(rn.nextInt());
+        }
+
+        long startingTime= System.nanoTime();
+        for(int i = 0; i < numOperations; i++){
+            dynamicArray.remove(rn.nextInt(dynamicArray.size()));
+        }
+
+        System.out.println(System.nanoTime() - startingTime);
+    }
+
+    public void performRemoveElementPerformanceTest(int arraySize, int numOperations) {
+        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+
+        Random rn = new Random();
+        for(int i = 0; i < arraySize; i++){
+            dynamicArray.add(i);
+        }
+
+        long startingTime= System.nanoTime();
+        for(int i = 0; i < numOperations; i++){
+            dynamicArray.remove(i);
+        }
+
+        System.out.println(System.nanoTime() - startingTime);
     }
 }
