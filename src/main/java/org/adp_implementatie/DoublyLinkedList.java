@@ -27,12 +27,11 @@ public class DoublyLinkedList<E> {
 
         if (tail == null) {
             head = newNode;
-            tail = newNode;
         } else {
             tail.next = newNode;
             newNode.prev = tail;
-            tail = newNode;
         }
+        tail = newNode;
 
         size++;
     }
@@ -124,7 +123,7 @@ public class DoublyLinkedList<E> {
             current = current.next;
             index++;
         }
-        return -1;  // Element not found
+        return -1;
     }
 
     private Node<E> getNodeAt(int index) {
@@ -154,39 +153,6 @@ public class DoublyLinkedList<E> {
             current = current.next;
         }
         System.out.println("null");
-    }
-
-    public static void main(String[] args) {
-        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
-
-        // Adding elements to the list
-        list.add(10);
-        list.add(20);
-        list.add(30);
-        list.add(40);
-
-        list.printList();  // Output: 10 <-> 20 <-> 30 <-> 40 <-> null
-
-        // Get element at index 2
-        System.out.println("Element at index 2: " + list.get(2));  // Output: 30
-
-        // Set element at index 1
-        list.set(1, 25);
-        list.printList();  // Output: 10 <-> 25 <-> 30 <-> 40 <-> null
-
-        // Remove element at index 2
-        list.remove(2);
-        list.printList();  // Output: 10 <-> 25 <-> 40 <-> null
-
-        // Remove element 25
-        list.remove(Integer.valueOf(25));
-        list.printList();  // Output: 10 <-> 40 <-> null
-
-        // Check if list contains 40
-        System.out.println("Contains 40: " + list.contains(40));  // Output: true
-
-        // Get the index of element 10
-        System.out.println("Index of 10: " + list.indexOf(10));  // Output: 0
     }
 }
 
