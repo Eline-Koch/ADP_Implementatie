@@ -94,6 +94,4 @@ public class DynamicArray<E> {
         }
         System.out.println("]");
     }
-
-
 }
