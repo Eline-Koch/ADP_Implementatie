@@ -42,7 +42,7 @@ public class DynamicArray<E> {
         return removedElement;
     }
 
-    public boolean remove(E element) {
+    public boolean removeElement(E element) {
         int index = indexOf(element);
         if (index != -1) {
             remove(index);
@@ -94,6 +94,4 @@ public class DynamicArray<E> {
         }
         System.out.println("]");
     }
-
-
 }
