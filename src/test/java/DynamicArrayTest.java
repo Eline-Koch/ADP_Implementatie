@@ -174,7 +174,6 @@ public class DynamicArrayTest {
 
     public void performRemoveElementPerformanceTest(int arraySize, int numOperations) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
-        Random rn = new Random();
         for(int i = 0; i < arraySize; i++){
             dynamicArray.add(i);
         }
@@ -190,7 +189,6 @@ public class DynamicArrayTest {
 
     public void performContainsPerformanceTest(int arraySize, int numOperations) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
-        Random rn = new Random();
         for(int i = 0; i < arraySize; i++){
             dynamicArray.add(i);
         }
@@ -211,7 +209,6 @@ public class DynamicArrayTest {
 
     public void performIndexOfPerformanceTest(int arraySize, int numOperations) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
-        Random rn = new Random();
         for(int i = 0; i < arraySize; i++){
             dynamicArray.add(i);
         }
