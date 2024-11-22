@@ -2,7 +2,6 @@ package org.adp_implementatie;
 
 public class DoublyLinkedList<E> {
 
-    // Node class to represent each element in the list
     private static class Node<E> {
         E data;
         Node<E> next;
@@ -13,9 +12,9 @@ public class DoublyLinkedList<E> {
         }
     }
 
-    private Node<E> head;  // Reference to the first node
-    private Node<E> tail;  // Reference to the last node
-    private int size;      // Size of the list
+    private Node<E> head;
+    private Node<E> tail;
+    private int size;
 
     public DoublyLinkedList() {
         head = null;
@@ -23,14 +22,13 @@ public class DoublyLinkedList<E> {
         size = 0;
     }
 
-    // Add element at the end of the list
     public void add(E element) {
         Node<E> newNode = new Node<>(element);
 
-        if (tail == null) {  // If the list is empty
+        if (tail == null) {
             head = newNode;
             tail = newNode;
-        } else {  // Append to the end of the list
+        } else {
             tail.next = newNode;
             newNode.prev = tail;
             tail = newNode;
@@ -39,7 +37,6 @@ public class DoublyLinkedList<E> {
         size++;
     }
 
-    // Get element at a specific index
     public E get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
@@ -49,7 +46,6 @@ public class DoublyLinkedList<E> {
         return current.data;
     }
 
-    // Set (replace) element at a specific index
     public void set(int index, E element) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
@@ -59,7 +55,6 @@ public class DoublyLinkedList<E> {
         current.data = element;
     }
 
-    // Remove element at a specific index
     public E remove(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
@@ -71,20 +66,19 @@ public class DoublyLinkedList<E> {
         if (current.prev != null) {
             current.prev.next = current.next;
         } else {
-            head = current.next;  // Removing the head
+            head = current.next;
         }
 
         if (current.next != null) {
             current.next.prev = current.prev;
         } else {
-            tail = current.prev;  // Removing the tail
+            tail = current.prev;
         }
 
         size--;
         return removedData;
     }
 
-    // Remove first occurrence of the element
     public boolean remove(E element) {
         Node<E> current = head;
         while (current != null) {
@@ -92,13 +86,13 @@ public class DoublyLinkedList<E> {
                 if (current.prev != null) {
                     current.prev.next = current.next;
                 } else {
-                    head = current.next;  // Removing the head
+                    head = current.next;
                 }
 
                 if (current.next != null) {
                     current.next.prev = current.prev;
                 } else {
-                    tail = current.prev;  // Removing the tail
+                    tail = current.prev;
                 }
 
                 size--;
@@ -106,10 +100,9 @@ public class DoublyLinkedList<E> {
             }
             current = current.next;
         }
-        return false;  // Element not found
+        return false;
     }
 
-    // Check if the list contains the specified element
     public boolean contains(E element) {
         Node<E> current = head;
         while (current != null) {
@@ -121,7 +114,6 @@ public class DoublyLinkedList<E> {
         return false;
     }
 
-    // Get the index of the first occurrence of the element
     public int indexOf(E element) {
         Node<E> current = head;
         int index = 0;
@@ -135,7 +127,6 @@ public class DoublyLinkedList<E> {
         return -1;  // Element not found
     }
 
-    // Helper method to get the node at a specific index
     private Node<E> getNodeAt(int index) {
         Node<E> current;
         if (index < size / 2) {
@@ -152,12 +143,10 @@ public class DoublyLinkedList<E> {
         return current;
     }
 
-    // Method to return the size of the list
     public int size() {
         return size;
     }
 
-    // Method to print the list for testing purposes
     public void printList() {
         Node<E> current = head;
         while (current != null) {
