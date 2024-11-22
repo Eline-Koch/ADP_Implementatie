@@ -1,3 +1,3 @@
 "# ADP_Implementatie" 
 
-### Run graddle build after pulling from Github!
+### Run gradle build after pulling from Github!
