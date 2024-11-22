@@ -21,7 +21,7 @@ public class DynamicArrayTest {
         System.out.println();
         System.out.println("dataset tests");
 
-        String dataString = Files.readString(Path.of("src/main/resources/dataset_sorteren.json"), Charset.defaultCharset());
+        String dataString = Files.readString(Path.of("src/test/resources/dataset_sorteren.json"), Charset.defaultCharset());
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, List<Object>> dataMap = objectMapper.readValue(dataString, new TypeReference<>(){});
 
