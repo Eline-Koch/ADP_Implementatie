@@ -1,8 +1,8 @@
+import java.io.IOException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.adp_implementatie.DynamicArray;
+import org.adp_implementatie.DoublyLinkedList;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class DynamicArrayTest {
+public class DoublyLinkedListTest {
     public static void main(String[] args) throws IOException {
-        DynamicArrayTest test = new DynamicArrayTest();
+        DoublyLinkedListTest test = new DoublyLinkedListTest();
         test.performDataSetTest();
         test.performPerformanceTest();
     }
@@ -29,13 +29,13 @@ public class DynamicArrayTest {
             String key = entry.getKey();
             List<Object> value = entry.getValue();
 
-            DynamicArray<Object> dynamicArray = new DynamicArray<>();
+            DoublyLinkedList<Object> doublyLinkedList = new DoublyLinkedList<>();
             for (Object o : value) {
-                dynamicArray.add(o);
+                doublyLinkedList.add(o);
             }
 
             System.out.print(key + ": ");
-            dynamicArray.printArray();
+            doublyLinkedList.printList();
         }
     }
 
@@ -109,15 +109,15 @@ public class DynamicArrayTest {
     }
 
     public void performAddPerformanceTest(int arraySize, int numOperations) {
-        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+        DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
         Random rn = new Random();
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(rn.nextInt());
+            doublyLinkedList.add(rn.nextInt());
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.add(rn.nextInt());
+            doublyLinkedList.add(rn.nextInt());
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -125,15 +125,15 @@ public class DynamicArrayTest {
     }
 
     public void performGetPerformanceTest(int arraySize, int numOperations) {
-        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+        DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
         Random rn = new Random();
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(rn.nextInt());
+            doublyLinkedList.add(rn.nextInt());
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.get(rn.nextInt(dynamicArray.size()));
+            doublyLinkedList.get(rn.nextInt(doublyLinkedList.size()));
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -141,15 +141,15 @@ public class DynamicArrayTest {
     }
 
     public void performSetPerformanceTest(int arraySize, int numOperations) {
-        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+        DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
         Random rn = new Random();
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(rn.nextInt());
+            doublyLinkedList.add(rn.nextInt());
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.set(rn.nextInt(dynamicArray.size()), rn.nextInt());
+            doublyLinkedList.set(rn.nextInt(doublyLinkedList.size()), rn.nextInt());
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -157,15 +157,15 @@ public class DynamicArrayTest {
     }
 
     public void performRemoveIndexPerformanceTest(int arraySize, int numOperations) {
-        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+        DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
         Random rn = new Random();
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(rn.nextInt());
+            doublyLinkedList.add(rn.nextInt());
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.remove(rn.nextInt(dynamicArray.size()));
+            doublyLinkedList.remove(rn.nextInt(doublyLinkedList.size()));
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -173,14 +173,14 @@ public class DynamicArrayTest {
     }
 
     public void performRemoveElementPerformanceTest(int arraySize, int numOperations) {
-        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+        DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(i);
+            doublyLinkedList.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.remove(Integer.valueOf(i + dynamicArray.size() / 2));
+            doublyLinkedList.remove(Integer.valueOf(i + doublyLinkedList.size() / 2));
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -188,18 +188,18 @@ public class DynamicArrayTest {
     }
 
     public void performContainsPerformanceTest(int arraySize, int numOperations) {
-        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+        DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(i);
+            doublyLinkedList.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
             if (i % 2 == 0) {
-                dynamicArray.contains(i + dynamicArray.size() / 2);
+                doublyLinkedList.contains(i + doublyLinkedList.size() / 2);
             }
             else {
-                dynamicArray.contains(i + 100000);
+                doublyLinkedList.contains(i + 100000);
             }
         }
 
@@ -208,14 +208,14 @@ public class DynamicArrayTest {
     }
 
     public void performIndexOfPerformanceTest(int arraySize, int numOperations) {
-        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+        DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(i);
+            doublyLinkedList.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.indexOf(i + dynamicArray.size() / 2);
+            doublyLinkedList.indexOf(i + doublyLinkedList.size() / 2);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
