@@ -115,7 +115,7 @@ public class DynamicArrayTest {
             dynamicArray.add(rn.nextInt());
         }
 
-        long startingTime= System.nanoTime();
+        long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
             dynamicArray.add(rn.nextInt());
         }
@@ -131,7 +131,7 @@ public class DynamicArrayTest {
             dynamicArray.add(rn.nextInt());
         }
 
-        long startingTime= System.nanoTime();
+        long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
             dynamicArray.get(rn.nextInt(dynamicArray.size()));
         }
@@ -147,7 +147,7 @@ public class DynamicArrayTest {
             dynamicArray.add(rn.nextInt());
         }
 
-        long startingTime= System.nanoTime();
+        long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
             dynamicArray.set(rn.nextInt(dynamicArray.size()), rn.nextInt());
         }
@@ -163,7 +163,7 @@ public class DynamicArrayTest {
             dynamicArray.add(rn.nextInt());
         }
 
-        long startingTime= System.nanoTime();
+        long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
             dynamicArray.remove(rn.nextInt(dynamicArray.size()));
         }
@@ -178,9 +178,9 @@ public class DynamicArrayTest {
             dynamicArray.add(i);
         }
 
-        long startingTime= System.nanoTime();
+        long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.remove(Integer.valueOf(i));
+            dynamicArray.remove(Integer.valueOf(i + dynamicArray.size() / 2));
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -193,10 +193,10 @@ public class DynamicArrayTest {
             dynamicArray.add(i);
         }
 
-        long startingTime= System.nanoTime();
+        long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
             if (i % 2 == 0) {
-                dynamicArray.contains(i);
+                dynamicArray.contains(i + dynamicArray.size() / 2);
             }
             else {
                 dynamicArray.contains(i + 100000);
@@ -213,9 +213,9 @@ public class DynamicArrayTest {
             dynamicArray.add(i);
         }
 
-        long startingTime= System.nanoTime();
+        long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.contains(i);
+            dynamicArray.indexOf(i + dynamicArray.size() / 2);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
