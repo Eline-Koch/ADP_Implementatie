@@ -181,7 +181,7 @@ public class DynamicArrayTest {
 
         long startingTime= System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.removeElement(i);
+            dynamicArray.remove(Integer.valueOf(i));
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
