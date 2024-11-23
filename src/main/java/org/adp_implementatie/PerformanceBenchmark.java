@@ -29,4 +29,9 @@ public class PerformanceBenchmark {
     public double getOperationsPerSecond() {
         return operations / getElapsedTimeInSeconds();
     }
+
+    public void printElapsedTime() {
+        double elapsedTime = getElapsedTimeInSeconds();
+        System.out.printf("%.9f seconden %n", elapsedTime);
+    }
 }

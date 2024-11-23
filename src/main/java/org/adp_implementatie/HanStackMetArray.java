@@ -4,10 +4,10 @@ public class HanStackMetArray {
     private final Object[] stack;
     private int top;
 
-    public HanStackMetArray() {
+    public HanStackMetArray(int size) {
         top = -1; // or else the first element of the array is selected
-        int maxSize = 5;
-        stack = new Object[maxSize];
+//        int maxSize = 5;
+        stack = new Object[size];
     }
 
     public void push(Object item) {
@@ -33,7 +33,7 @@ public class HanStackMetArray {
     }
 
     public static void main(String[] args) {
-        HanStackMetArray HanStackMetArray = new HanStackMetArray();
+        HanStackMetArray HanStackMetArray = new HanStackMetArray(5);
 
         System.out.println(HanStackMetArray.isEmpty());
         HanStackMetArray.push(1);
