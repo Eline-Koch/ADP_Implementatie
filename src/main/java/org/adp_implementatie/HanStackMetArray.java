@@ -6,8 +6,7 @@ public class HanStackMetArray {
 
     public HanStackMetArray(int size) {
         top = -1; // or else the first element of the array is selected
-//        int maxSize = 5;
-        stack = new Object[size];
+        stack = new Object[size]; // max size = size; zoals in de video
     }
 
     public void push(Object item) {
@@ -17,15 +16,14 @@ public class HanStackMetArray {
 
     public void pop() {
         top--;
-        this.stack[top] = null;
     }
 
     public Object peek() {
         return stack[top];
     }
 
-    public int size() {
-        return top + 1;
+    public int top() {
+        return top;
     }
 
     public boolean isEmpty() {

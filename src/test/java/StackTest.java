@@ -38,6 +38,10 @@ public class StackTest {
             testStackPeekOperation(i, 1);
         }
 
+        for (int i : stackSize) {
+            testStackTopOperation(i, 1);
+        }
+
     }
 
     public static void performDataSetTest() throws IOException {
@@ -107,6 +111,24 @@ public class StackTest {
         stack.peek();
         benchmark.stop();
         System.out.println("Stack Peek met size: " + stackSize + " Object to peek: " + pushObject.toString());
+        benchmark.printElapsedTime();
+        System.out.println();
+    }
+
+    public static void testStackTopOperation(int stackSize, Object pushObject) {
+        HanStackMetArray stack = new HanStackMetArray(stackSize);
+        PerformanceBenchmark benchmark = new PerformanceBenchmark();
+
+        for (int i = 0; i < stackSize; i++) {
+            stack.push(pushObject);
+        }
+
+        benchmark.start();
+        for (int i = 0; i < stackSize - 1; i++) {
+            stack.top();
+        }
+        benchmark.stop();
+        System.out.println("Stack Top met size: " + stackSize + " Object to top: " + pushObject.toString());
         benchmark.printElapsedTime();
         System.out.println();
     }
