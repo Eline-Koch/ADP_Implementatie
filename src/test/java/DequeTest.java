@@ -1,11 +1,22 @@
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.adp_implementatie.Deque;
 import org.adp_implementatie.PerformanceBenchmark;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
+
 public class DequeTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Pizza pizza = new Pizza("Doner kebab", false);
 
         int[] dequeSizes = {1000, 10000, 100000, 1000000, 10000000};
+
+        performDequeDataSetTest();
 
         for (int size : dequeSizes) {
             testDequeInsertLeft(size, "String insert");
@@ -23,6 +34,37 @@ public class DequeTest {
             testDequeRemoveRight(size, 1);
         }
     }
+
+    public static void performDequeDataSetTest() throws IOException {
+        System.out.println();
+        System.out.println("Dataset test voor Deque");
+
+        String dataString = Files.readString(Path.of("src/test/resources/dataset_sorteren.json"), Charset.defaultCharset());
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, List<Object>> dataMap = objectMapper.readValue(dataString, new TypeReference<>(){});
+
+        for (Map.Entry<String, List<Object>> entry : dataMap.entrySet()) {
+            String key = entry.getKey();
+            List<Object> value = entry.getValue();
+
+            Deque<Object> dequeLeft = new Deque<>();
+            for (Object o : value) {
+                dequeLeft.insertLeft(o);
+            }
+
+            System.out.print(key + " (insertLeft): ");
+            dequeLeft.display();
+
+            Deque<Object> dequeRight = new Deque<>();
+            for (Object o : value) {
+                dequeRight.insertRight(o);
+            }
+
+            System.out.print(key + " (insertRight): ");
+            dequeRight.display();
+        }
+    }
+
 
     public static void testDequeInsertLeft(int dequeSize, Object insertObject) {
         Deque<Object> deque = new Deque<>();
@@ -78,7 +120,6 @@ public class DequeTest {
         Deque<Object> deque = new Deque<>();
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
 
-        // Vul de deque eerst met data
         for (int i = 0; i < dequeSize; i++) {
             deque.insertRight(insertObject);
         }

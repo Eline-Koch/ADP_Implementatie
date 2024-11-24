@@ -15,27 +15,29 @@ public class StackTest {
         Pizza pizza = new Pizza("Doner kebab", false);
 
         performDataSetTest();
-//        int[] stackSize = {1000, 10000, 100000, 1000000, 10000000, 100000000};
-//
-//        for (int i : stackSize) {
-//            testStackAddOperation(i, "String insert");
-//        }
-//
-//        for (int i : stackSize) {
-//            testStackAddOperation(i, pizza);
-//        }
-//
-//        for (int i : stackSize) {
-//            testStackAddOperation(i, 1);
-//        }
-//
-//        for (int i : stackSize) {
-//            testStackPopOperation(i, 1);
-//        }
-//
-//        for (int i : stackSize) {
-//            testStackPeekOperation(i, 1);
-//        }
+
+        int[] stackSize = {1000, 10000, 100000, 1000000, 10000000, 100000000};
+
+        for (int i : stackSize) {
+            testStackAddOperation(i, "String insert");
+        }
+
+        for (int i : stackSize) {
+            testStackAddOperation(i, pizza);
+        }
+
+        for (int i : stackSize) {
+            testStackAddOperation(i, 1);
+        }
+
+        for (int i : stackSize) {
+            testStackPopOperation(i, 1);
+        }
+
+        for (int i : stackSize) {
+            testStackPeekOperation(i, 1);
+        }
+
     }
 
     public static void performDataSetTest() throws IOException {
