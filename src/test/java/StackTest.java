@@ -27,7 +27,7 @@ public class StackTest {
         }
 
         for (int i : stackSize) {
-            testStackAddOperation(i, 1);
+            testStackAddOperation(i, new int[]{1, 3, 4});
         }
 
         for (int i : stackSize) {
