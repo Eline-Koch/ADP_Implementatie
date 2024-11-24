@@ -15,7 +15,6 @@ public class StackTest {
         Pizza pizza = new Pizza("Doner kebab", false);
 
         performDataSetTest();
-        System.out.println("finished");
 
         int[] stackSize = {1000, 10000, 100000, 1000000, 10000000, 100000000};
 
