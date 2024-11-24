@@ -1,49 +1,42 @@
 package org.adp_implementatie;
 
-public class HanStackMetArray {
-    private final Object[] stack;
+public class HanStackMetArray<T> {
+    private final T[] stack;
     private int top;
 
+    @SuppressWarnings("unchecked")
     public HanStackMetArray(int size) {
-        top = -1; // or else the first element of the array is selected
-        stack = new Object[size]; // max size = size; zoals in de video
+        top = -1;
+        stack = (T[]) new Object[size];
     }
 
-    public void push(Object item) {
-        top++;
-        this.stack[top] = item;
+    public void push(T item) {
+        if (top == stack.length - 1) {
+            throw new StackOverflowError("Stack is vol");
+        }
+        stack[++top] = item;
     }
 
-    public void pop() {
-        top--;
+    public T pop() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Stack is leeg");
+        }
+        return stack[top--];
     }
 
-    public Object peek() {
-        return stack[top];
+    public T peek() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Stack is leeg");
+        }
+        return stack[top]; // Retourneer het bovenste item zonder te verwijderen
     }
 
     public int top() {
-        return top;
+        return top; // Retourneer de huidige index van top
     }
 
     public boolean isEmpty() {
-        return top == -1;
-    }
-
-    public static void main(String[] args) {
-        HanStackMetArray HanStackMetArray = new HanStackMetArray(5);
-
-        System.out.println(HanStackMetArray.isEmpty());
-        HanStackMetArray.push(1);
-        HanStackMetArray.push(2);
-
-        System.out.println(HanStackMetArray.peek()); // 2
-
-        HanStackMetArray.pop();
-        System.out.println(HanStackMetArray.peek()); // 1
-
-        HanStackMetArray.pop();
-        System.out.println(HanStackMetArray.peek()); // Geeft een error want is leeg. dus correct
+        return top == -1; // Controleer of de stack leeg is
     }
 
     public void printStack() {
@@ -57,6 +50,29 @@ public class HanStackMetArray {
         }
         System.out.println();
     }
+
+    public static void main(String[] args) {
+        HanStackMetArray<Integer> integerStack = new HanStackMetArray<>(5);
+
+        System.out.println("Is stack empty? " + integerStack.isEmpty());
+        integerStack.push(1);
+        integerStack.push(2);
+
+        System.out.println("Peek: " + integerStack.peek()); // 2
+
+        integerStack.pop();
+        System.out.println("Peek after pop: " + integerStack.peek()); // 1
+
+        integerStack.pop();
+        try {
+            System.out.println("Peek after empty: " + integerStack.peek()); // Gooit een error
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        HanStackMetArray<String> stringStack = new HanStackMetArray<>(3);
+        stringStack.push("Hello");
+        stringStack.push("World");
+        stringStack.printStack(); // World Hello
+    }
 }
-
-

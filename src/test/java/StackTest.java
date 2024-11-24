@@ -41,7 +41,6 @@ public class StackTest {
         for (int i : stackSize) {
             testStackTopOperation(i, 1);
         }
-
     }
 
     public static void performDataSetTest() throws IOException {
@@ -50,13 +49,13 @@ public class StackTest {
 
         String dataString = Files.readString(Path.of("src/test/resources/dataset_sorteren.json"), Charset.defaultCharset());
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, List<Object>> dataMap = objectMapper.readValue(dataString, new TypeReference<>(){});
+        Map<String, List<Object>> dataMap = objectMapper.readValue(dataString, new TypeReference<>() {});
 
         for (Map.Entry<String, List<Object>> entry : dataMap.entrySet()) {
             String key = entry.getKey();
             List<Object> value = entry.getValue();
 
-            HanStackMetArray stack = new HanStackMetArray(10000);
+            HanStackMetArray<Object> stack = new HanStackMetArray<>(10000);
             for (Object o : value) {
                 stack.push(o);
             }
@@ -67,7 +66,7 @@ public class StackTest {
     }
 
     public static void testStackAddOperation(int stackSize, Object pushObject) {
-        HanStackMetArray stack = new HanStackMetArray(stackSize);
+        HanStackMetArray<Object> stack = new HanStackMetArray<>(stackSize);
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
 
         benchmark.start();
@@ -78,11 +77,10 @@ public class StackTest {
         System.out.println("Stack add met size: " + stackSize + " Object to insert: " + pushObject.toString());
         benchmark.printElapsedTime();
         System.out.println();
-
     }
 
     public static void testStackPopOperation(int stackSize, Object pushObject) {
-        HanStackMetArray stack = new HanStackMetArray(stackSize);
+        HanStackMetArray<Object> stack = new HanStackMetArray<>(stackSize);
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
 
         for (int i = 0; i < stackSize; i++) {
@@ -100,7 +98,7 @@ public class StackTest {
     }
 
     public static void testStackPeekOperation(int stackSize, Object pushObject) {
-        HanStackMetArray stack = new HanStackMetArray(stackSize);
+        HanStackMetArray<Object> stack = new HanStackMetArray<>(stackSize);
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
 
         for (int i = 0; i < stackSize; i++) {
@@ -116,7 +114,7 @@ public class StackTest {
     }
 
     public static void testStackTopOperation(int stackSize, Object pushObject) {
-        HanStackMetArray stack = new HanStackMetArray(stackSize);
+        HanStackMetArray<Object> stack = new HanStackMetArray<>(stackSize);
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
 
         for (int i = 0; i < stackSize; i++) {
@@ -133,4 +131,3 @@ public class StackTest {
         System.out.println();
     }
 }
-
