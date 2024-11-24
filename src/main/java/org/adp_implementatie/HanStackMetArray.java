@@ -6,7 +6,7 @@ public class HanStackMetArray<T> {
 
     @SuppressWarnings("unchecked")
     public HanStackMetArray(int size) {
-        top = -1;
+        top = 0;
         stack = (T[]) new Object[size];
     }
 

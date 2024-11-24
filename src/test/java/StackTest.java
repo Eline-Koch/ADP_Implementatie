@@ -15,10 +15,13 @@ public class StackTest {
         Pizza pizza = new Pizza("Doner kebab", false);
 
         performDataSetTest();
+        System.out.println("finished");
 
         int[] stackSize = {1000, 10000, 100000, 1000000, 10000000, 100000000};
 
+        System.out.println(stackSize[0]);
         for (int i : stackSize) {
+            System.out.println(i);
             testStackAddOperation(i, "String insert");
         }
 
@@ -55,7 +58,7 @@ public class StackTest {
             String key = entry.getKey();
             List<Object> value = entry.getValue();
 
-            HanStackMetArray<Object> stack = new HanStackMetArray<>(10000);
+            HanStackMetArray<Object> stack = new HanStackMetArray<>(99999999);
             for (Object o : value) {
                 stack.push(o);
             }
@@ -70,7 +73,7 @@ public class StackTest {
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
 
         benchmark.start();
-        for (int i = 0; i < stackSize; i++) {
+        for (int i = 0; i < stackSize - 1; i++) {
             stack.push(pushObject);
         }
         benchmark.stop();
@@ -83,7 +86,7 @@ public class StackTest {
         HanStackMetArray<Object> stack = new HanStackMetArray<>(stackSize);
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
 
-        for (int i = 0; i < stackSize; i++) {
+        for (int i = 0; i < stackSize - 1; i++) {
             stack.push(pushObject);
         }
 
@@ -101,7 +104,7 @@ public class StackTest {
         HanStackMetArray<Object> stack = new HanStackMetArray<>(stackSize);
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
 
-        for (int i = 0; i < stackSize; i++) {
+        for (int i = 0; i < stackSize - 1; i++) {
             stack.push(pushObject);
         }
 
@@ -117,7 +120,7 @@ public class StackTest {
         HanStackMetArray<Object> stack = new HanStackMetArray<>(stackSize);
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
 
-        for (int i = 0; i < stackSize; i++) {
+        for (int i = 0; i < stackSize - 1; i++) {
             stack.push(pushObject);
         }
 
