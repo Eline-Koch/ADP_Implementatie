@@ -1,30 +1,62 @@
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.adp_implementatie.HanStackMetArray;
 import org.adp_implementatie.PerformanceBenchmark;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
+
 public class StackTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Pizza pizza = new Pizza("Doner kebab", false);
 
-        int[] stackSize = {1000, 10000, 100000, 1000000, 10000000, 100000000};
+        performDataSetTest();
+//        int[] stackSize = {1000, 10000, 100000, 1000000, 10000000, 100000000};
+//
+//        for (int i : stackSize) {
+//            testStackAddOperation(i, "String insert");
+//        }
+//
+//        for (int i : stackSize) {
+//            testStackAddOperation(i, pizza);
+//        }
+//
+//        for (int i : stackSize) {
+//            testStackAddOperation(i, 1);
+//        }
+//
+//        for (int i : stackSize) {
+//            testStackPopOperation(i, 1);
+//        }
+//
+//        for (int i : stackSize) {
+//            testStackPeekOperation(i, 1);
+//        }
+    }
 
-        for (int i : stackSize) {
-            testStackAddOperation(i, "String insert");
-        }
+    public static void performDataSetTest() throws IOException {
+        System.out.println();
+        System.out.println("dataset test");
 
-        for (int i : stackSize) {
-            testStackAddOperation(i, pizza);
-        }
+        String dataString = Files.readString(Path.of("src/test/resources/dataset_sorteren.json"), Charset.defaultCharset());
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, List<Object>> dataMap = objectMapper.readValue(dataString, new TypeReference<>(){});
 
-        for (int i : stackSize) {
-            testStackAddOperation(i, 1);
-        }
+        for (Map.Entry<String, List<Object>> entry : dataMap.entrySet()) {
+            String key = entry.getKey();
+            List<Object> value = entry.getValue();
 
-        for (int i : stackSize) {
-            testStackPopOperation(i, 1);
-        }
+            HanStackMetArray stack = new HanStackMetArray(10000);
+            for (Object o : value) {
+                stack.push(o);
+            }
 
-        for (int i : stackSize) {
-            testStackPeekOperation(i, 1);
+            System.out.print(key + ": ");
+            stack.printStack();
         }
     }
 

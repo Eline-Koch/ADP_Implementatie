@@ -47,6 +47,18 @@ public class HanStackMetArray {
         HanStackMetArray.pop();
         System.out.println(HanStackMetArray.peek()); // Geeft een error want is leeg. dus correct
     }
+
+    public void printStack() {
+        if (isEmpty()) {
+            System.out.println("Stack is empty");
+            return;
+        }
+        System.out.print("Stack elements (top -> bottom): ");
+        for (int i = top; i >= 0; i--) {
+            System.out.print(stack[i] + " ");
+        }
+        System.out.println();
+    }
 }
 
 
