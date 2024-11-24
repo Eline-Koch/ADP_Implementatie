@@ -67,15 +67,14 @@ public class StackTest {
 
         for (int i = 0; i < stackSize; i++) {
             stack.push(pushObject);
-
-            if (i == stackSize / 2){
-                benchmark.start();
-                stack.peek();
-                benchmark.stop();
-                System.out.println("Stack Peek met size: " + stackSize + " Object to peek: " + pushObject.toString());
-                benchmark.printElapsedTime();
-                System.out.println();
-            }
         }
+
+        benchmark.start();
+        stack.peek();
+        benchmark.stop();
+        System.out.println("Stack Peek met size: " + stackSize + " Object to peek: " + pushObject.toString());
+        benchmark.printElapsedTime();
+        System.out.println();
     }
 }
+
