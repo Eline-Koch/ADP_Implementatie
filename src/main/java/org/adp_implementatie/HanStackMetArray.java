@@ -54,25 +54,19 @@ public class HanStackMetArray<T> {
     public static void main(String[] args) {
         HanStackMetArray<Integer> integerStack = new HanStackMetArray<>(5);
 
-        System.out.println("Is stack empty? " + integerStack.isEmpty());
         integerStack.push(1);
         integerStack.push(2);
 
         System.out.println("Peek: " + integerStack.peek()); // 2
 
-        integerStack.pop();
+        System.out.println(integerStack.pop());
         System.out.println("Peek after pop: " + integerStack.peek()); // 1
-
-        integerStack.pop();
-        try {
-            System.out.println("Peek after empty: " + integerStack.peek()); // Gooit een error
-        } catch (IllegalStateException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
 
         HanStackMetArray<String> stringStack = new HanStackMetArray<>(3);
         stringStack.push("Hello");
         stringStack.push("World");
         stringStack.printStack(); // World Hello
+        System.out.println(stringStack.pop());
+        System.out.println(stringStack.peek());
     }
 }
