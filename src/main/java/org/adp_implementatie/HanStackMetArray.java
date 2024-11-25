@@ -28,15 +28,15 @@ public class HanStackMetArray<T> {
         if (isEmpty()) {
             throw new IllegalStateException("Stack is leeg");
         }
-        return stack[top]; // Retourneer het bovenste item zonder te verwijderen
+        return stack[top];
     }
 
     public int top() {
-        return top; // Retourneer de huidige index van top
+        return top;
     }
 
     public boolean isEmpty() {
-        return top == -1; // Controleer of de stack leeg is
+        return top == -1;
     }
 
     public void printStack() {

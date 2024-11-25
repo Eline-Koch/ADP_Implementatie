@@ -1,7 +1,6 @@
 package org.adp_implementatie;
 
 public class Deque<T> {
-    // Inner class for nodes in the deque
     private static class Node<T> {
         T data;
         Node<T> next;
@@ -14,22 +13,20 @@ public class Deque<T> {
         }
     }
 
-    private Node<T> front; // Points to the front of the deque
-    private Node<T> rear;  // Points to the rear of the deque
-    private int size;      // Tracks the size of the deque
+    private Node<T> front;
+    private Node<T> rear;
+    private int size;
 
-    // Constructor
     public Deque() {
         front = null;
         rear = null;
         size = 0;
     }
 
-    // Inserts an element at the left (front) of the deque
     public void insertLeft(T value) {
         Node<T> newNode = new Node<>(value);
         if (isEmpty()) {
-            front = rear = newNode; // First element in the deque
+            front = rear = newNode;
         } else {
             newNode.next = front;
             front.prev = newNode;
@@ -38,11 +35,10 @@ public class Deque<T> {
         size++;
     }
 
-    // Inserts an element at the right (rear) of the deque
     public void insertRight(T value) {
         Node<T> newNode = new Node<>(value);
         if (isEmpty()) {
-            front = rear = newNode; // First element in the deque
+            front = rear = newNode;
         } else {
             newNode.prev = rear;
             rear.next = newNode;
@@ -51,36 +47,32 @@ public class Deque<T> {
         size++;
     }
 
-    // Checks if the deque is empty
     public boolean isEmpty() {
         return size == 0;
     }
 
-    // Returns the size of the deque
     public int size() {
         return size;
     }
 
-    // Displays the elements of the deque from front to rear
     public void display() {
         if (isEmpty()) {
             System.out.println("Deque is empty.");
             return;
         }
         Node<T> current = front;
-        while (current != null) { // With Iterator instead of index
+        while (current != null) {
             System.out.print(current.data + " ");
             current = current.next;
         }
         System.out.println();
     }
 
-    // Removes and returns the element at the left (front) of the deque
     public T removeLeft() {
         if (isEmpty()) throw new IllegalStateException("Deque is empty.");
         T value = front.data;
         front = front.next;
-        if (front == null) { // If the deque becomes empty
+        if (front == null) {
             rear = null;
         } else {
             front.prev = null;
@@ -89,12 +81,11 @@ public class Deque<T> {
         return value;
     }
 
-    // Removes and returns the element at the right (rear) of the deque
     public T removeRight() {
         if (isEmpty()) throw new IllegalStateException("Deque is empty.");
         T value = rear.data;
         rear = rear.prev;
-        if (rear == null) { // If the deque becomes empty
+        if (rear == null) {
             front = null;
         } else {
             rear.next = null;
