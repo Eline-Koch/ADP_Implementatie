@@ -19,7 +19,7 @@ public class PerformanceBenchmark {
     }
 
     public double getElapsedTimeInSeconds() {
-        return (endTime - startTime) / 1e9; // omrekenen naar seconden
+        return (endTime - startTime) / 1e9;
     }
 
     public long getOperations() {
