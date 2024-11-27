@@ -37,8 +37,9 @@ public class DynamicArray<E> {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
         E removedElement = (E) array[index];
-        System.arraycopy(array, index + 1, array, index, size - index - 1);
+        System.arraycopy(array, index + 1, array, index, size - index - 1); //aanpassen
         array[--size] = null;
+        reduceCapacity(size + 1);
         return removedElement;
     }
 
@@ -67,7 +68,14 @@ public class DynamicArray<E> {
     private void ensureCapacity(int requiredCapacity) {
         if (requiredCapacity > array.length) {
             int newCapacity = array.length * 2;
-            array = Arrays.copyOf(array, newCapacity);
+            array = Arrays.copyOf(array, newCapacity); //aanpassen?
+        }
+    }
+
+    private void reduceCapacity(int requiredCapacity) {
+        if (requiredCapacity < array.length / 2) {
+            int newCapacity = array.length / 2;
+            array = Arrays.copyOf(array, newCapacity); //aanpassen?
         }
     }
 
