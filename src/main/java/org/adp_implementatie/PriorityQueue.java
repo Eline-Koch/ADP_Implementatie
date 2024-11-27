@@ -1,102 +1,108 @@
 package org.adp_implementatie;
 
-import java.util.Arrays;
-import java.util.Comparator;
 
 public class PriorityQueue {
-    private int[] heap;
-    private int size;
-    private Comparator<Integer> comparator;
+    private int[] heap; // Array om de heap op te slaan
+    private int size;   // Huidige grootte van de heap
+    private int capacity; // Maximale capaciteit van de heap
 
-    public PriorityQueue(int capacity, Comparator<Integer> comparator) {
-        heap = new int[capacity];
-        size = 0;
-        this.comparator = comparator;
+    // Constructor
+    public PriorityQueue(int capacity) {
+        this.capacity = capacity;
+        this.size = 0;
+        this.heap = new int[capacity];
     }
 
-    public void add(int element) {
-        if (size == heap.length) {
-            heap = Arrays.copyOf(heap, size * 2);
+    // Peek: Bekijk het kleinste element zonder te verwijderen
+    public int peek() {
+        if (size == 0) {
+            throw new IllegalStateException("Priority Queue is empty.");
         }
-        heap[size] = element;
-        size++;
-        heapifyUp();
+        return heap[0]; // Het wortelelement
     }
 
+    // Poll: Haal het kleinste element uit de queue
     public int poll() {
         if (size == 0) {
-            throw new IllegalStateException("Queue is empty");
+            throw new IllegalStateException("Priority Queue is empty.");
         }
         int root = heap[0];
-        heap[0] = heap[size - 1];
-        size--;
-        heapifyDown();
+        heap[0] = heap[size - 1]; // Verplaats het laatste element naar de wortel
+        size--; // Verminder de grootte
+        heapifyDown(0); // Herstel de heap-eigenschap
         return root;
     }
 
-    public boolean isEmpty() {
-        return size == 0;
+    // Add: Voeg een element toe aan de queue
+    public void add(int element) {
+        if (size == capacity) {
+            throw new IllegalStateException("Priority Queue is full.");
+        }
+        heap[size] = element; // Voeg het element toe aan het einde
+        size++; // Verhoog de grootte
+        heapifyUp(size - 1); // Herstel de heap-eigenschap
     }
 
-    private void heapifyUp() {
-        int index = size - 1;
-        while (index > 0 && comparator.compare(heap[index], heap[parent(index)]) < 0) {
-            swap(index, parent(index));
-            index = parent(index);
+    // Heapify omhoog: Herstel de heap-eigenschap na toevoegen
+    private void heapifyUp(int index) {
+        while (index > 0) {
+            int parentIndex = (index - 1) / 2;
+            if (heap[index] >= heap[parentIndex]) {
+                break; // Heap-eigenschap is voldaan
+            }
+            swap(index, parentIndex);
+            index = parentIndex;
         }
     }
 
-    private void heapifyDown() {
-        int index = 0;
-        while (leftChild(index) < size) {
-            int smallerChild = leftChild(index);
-            if (rightChild(index) < size && comparator.compare(heap[rightChild(index)], heap[smallerChild]) < 0) {
-                smallerChild = rightChild(index);
+    // Heapify omlaag: Herstel de heap-eigenschap na verwijderen
+    private void heapifyDown(int index) {
+        while (index < size) {
+            int leftChildIndex = 2 * index + 1;
+            int rightChildIndex = 2 * index + 2;
+            int smallest = index;
+
+            if (leftChildIndex < size && heap[leftChildIndex] < heap[smallest]) {
+                smallest = leftChildIndex;
             }
 
-            if (comparator.compare(heap[index], heap[smallerChild]) <= 0) {
-                break;
+            if (rightChildIndex < size && heap[rightChildIndex] < heap[smallest]) {
+                smallest = rightChildIndex;
             }
 
-            swap(index, smallerChild);
-            index = smallerChild;
+            if (smallest == index) {
+                break; // Heap-eigenschap is voldaan
+            }
+
+            swap(index, smallest);
+            index = smallest;
         }
     }
 
+    // Wissel twee elementen in de array
     private void swap(int i, int j) {
         int temp = heap[i];
         heap[i] = heap[j];
         heap[j] = temp;
     }
 
-    private int parent(int index) {
-        return (index - 1) / 2;
+    // Methode om de grootte van de queue te verkrijgen
+    public int size() {
+        return size;
     }
 
-    private int leftChild(int index) {
-        return 2 * index + 1;
-    }
-
-    private int rightChild(int index) {
-        return 2 * index + 2;
-    }
-
+    // Testprogramma
     public static void main(String[] args) {
-        // Create a comparator for ascending order
-        Comparator<Integer> ascending = Integer::compareTo;
+        PriorityQueue pq = new PriorityQueue(10);
 
-        // Create a custom priority queue with a capacity of 10
-        PriorityQueue pq = new PriorityQueue(10, ascending);
-
-        // Adding elements
         pq.add(10);
         pq.add(5);
         pq.add(20);
-        pq.add(15);
+        pq.add(2);
 
-        // Printing and removing elements
-        while (!pq.isEmpty()) {
-            System.out.println("Removed: " + pq.poll()); // Will print in ascending order
-        }
+        System.out.println("Peek: " + pq.peek()); // Moet 2 zijn
+        System.out.println("Poll: " + pq.poll()); // Verwijdert en retourneert 2
+        System.out.println("Peek: " + pq.peek()); // Moet 5 zijn
+        System.out.println("Size: " + pq.size()); // Moet 3 zijn
     }
 }
