@@ -1,6 +1,8 @@
 package org.adp_implementatie;
 
 
+import java.util.Arrays;
+
 public class PriorityQueue {
     private int[] heap; // Array om de heap op te slaan
     private int size;   // Huidige grootte van de heap
@@ -30,17 +32,30 @@ public class PriorityQueue {
         heap[0] = heap[size - 1]; // Verplaats het laatste element naar de wortel
         size--; // Verminder de grootte
         heapifyDown(0); // Herstel de heap-eigenschap
+        reduceCapacity();
         return root;
     }
 
     // Add: Voeg een element toe aan de queue
     public void add(int element) {
-        if (size == capacity) {
-            throw new IllegalStateException("Priority Queue is full.");
-        }
+        ensureExtraCapacity();
         heap[size] = element; // Voeg het element toe aan het einde
         size++; // Verhoog de grootte
         heapifyUp(size - 1); // Herstel de heap-eigenschap
+    }
+
+    private void ensureExtraCapacity() {
+        if (size == capacity) {
+            heap = Arrays.copyOf(heap, capacity * 2); //aanpassen of begrijpen?
+            capacity *= 2;
+        }
+    }
+
+    private void reduceCapacity() {
+        if (size < capacity / 2) {
+            heap = Arrays.copyOf(heap, capacity / 2); //aanpassen of begrijpen?
+            capacity /= 2;
+        }
     }
 
     // Heapify omhoog: Herstel de heap-eigenschap na toevoegen
