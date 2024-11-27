@@ -76,7 +76,7 @@ public class DynamicArrayTest {
 
         for (int size : arraySize) {
             for (int num : numOperations) {
-                this.performRemoveIndexPerformanceTest(size * 20, num / 10);
+                this.performRemoveIndexPerformanceTest(size * 2, num / 100);
             }
         }
 
@@ -85,7 +85,7 @@ public class DynamicArrayTest {
 
         for (int size : arraySize) {
             for (int num : numOperations) {
-                this.performRemoveElementPerformanceTest(size * 20, num / 10);
+                this.performRemoveElementPerformanceTest(size * 2, num / 100);
             }
         }
 
@@ -94,7 +94,7 @@ public class DynamicArrayTest {
 
         for (int size : arraySize) {
             for (int num : numOperations) {
-                this.performContainsPerformanceTest(size * 10, num / 10);
+                this.performContainsPerformanceTest(size, num / 100);
             }
         }
 
@@ -103,7 +103,7 @@ public class DynamicArrayTest {
 
         for (int size : arraySize) {
             for (int num : numOperations) {
-                this.performIndexOfPerformanceTest(size * 10, num / 10);
+                this.performIndexOfPerformanceTest(size, num / 100);
             }
         }
     }
