@@ -36,7 +36,7 @@ public class HanStackMetArray<T> {
     }
 
     public boolean isEmpty() {
-        return top == -1;
+        return top == 0;
     }
 
     public void printStack() {
@@ -54,9 +54,9 @@ public class HanStackMetArray<T> {
     public static void main(String[] args) {
         HanStackMetArray<Integer> integerStack = new HanStackMetArray<>(5);
 
+
         integerStack.push(1);
         integerStack.push(2);
-
         System.out.println("Peek: " + integerStack.peek()); // 2
 
         System.out.println(integerStack.pop());

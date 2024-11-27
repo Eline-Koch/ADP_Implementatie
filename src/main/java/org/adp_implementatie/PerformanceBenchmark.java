@@ -34,4 +34,10 @@ public class PerformanceBenchmark {
         double elapsedTime = getElapsedTimeInSeconds();
         System.out.printf("%.9f seconden %n", elapsedTime);
     }
+
+    public String getElapsedTime() {
+        double elapsedTime = getElapsedTimeInSeconds();
+
+        return String.format("%.9f seconden", elapsedTime);
+    }
 }

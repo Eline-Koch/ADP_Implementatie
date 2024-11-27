@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.adp_implementatie.ExcelWriter;
 import org.adp_implementatie.HanStackMetArray;
 import org.adp_implementatie.PerformanceBenchmark;
 
@@ -7,42 +8,48 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.adp_implementatie.ExcelWriter.generateTestResult;
+import static org.adp_implementatie.ExcelWriter.writeTestResultsToExcel;
+
 public class StackTest {
     public static void main(String[] args) throws IOException {
-        Pizza pizza = new Pizza("Doner kebab", false);
-
-        performDataSetTest();
+//        Pizza pizza = new Pizza("Doner kebab", false);
+//        performDataSetTest();
 
         int[] stackSize = {1000, 10000, 100000, 1000000, 10000000, 100000000};
 
-        System.out.println(stackSize[0]);
-        for (int i : stackSize) {
-            System.out.println(i);
-            testStackAddOperation(i, "String insert");
+        Object[][] testDataSet = new Object[6][6];
+
+        for (int i = 0; i < stackSize.length; i++) {
+            System.out.println("start");
+            testDataSet[i] = testStackAddOperation(stackSize[i], "String insert");
+            System.out.println("starsadsadast");
+
         }
 
-        for (int i : stackSize) {
-            testStackAddOperation(i, pizza);
-        }
+        Object[][][] allData = { testDataSet, testDataSet};
 
-        for (int i : stackSize) {
-            testStackAddOperation(i, new int[]{1, 3, 4});
-        }
+        ExcelWriter.writeTestResultsToExcel(allData, "TestDataSet2.xlsx");
 
-        for (int i : stackSize) {
-            testStackPopOperation(i, 1);
-        }
-
-        for (int i : stackSize) {
-            testStackPeekOperation(i, 1);
-        }
-
-        for (int i : stackSize) {
-            testStackTopOperation(i, 1);
-        }
+//        for (int i : stackSize) {
+//            testStackAddOperation(i, new int[]{1, 3, 4});
+//        }
+//
+//        for (int i : stackSize) {
+//            testStackPopOperation(i, 1);
+//        }
+//
+//        for (int i : stackSize) {
+//            testStackPeekOperation(i, 1);
+//        }
+//
+//        for (int i : stackSize) {
+//            testStackTopOperation(i, 1);
+//        }
     }
 
     public static void performDataSetTest() throws IOException {
@@ -51,7 +58,8 @@ public class StackTest {
 
         String dataString = Files.readString(Path.of("src/test/resources/dataset_sorteren.json"), Charset.defaultCharset());
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, List<Object>> dataMap = objectMapper.readValue(dataString, new TypeReference<>() {});
+        Map<String, List<Object>> dataMap = objectMapper.readValue(dataString, new TypeReference<>() {
+        });
 
         for (Map.Entry<String, List<Object>> entry : dataMap.entrySet()) {
             String key = entry.getKey();
@@ -67,7 +75,7 @@ public class StackTest {
         }
     }
 
-    public static void testStackAddOperation(int stackSize, Object pushObject) {
+    public static Object[][] testStackAddOperation(int stackSize, Object pushObject) {
         HanStackMetArray<Object> stack = new HanStackMetArray<>(stackSize);
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
 
@@ -76,9 +84,8 @@ public class StackTest {
             stack.push(pushObject);
         }
         benchmark.stop();
-        System.out.println("Stack add met size: " + stackSize + " Object to insert: " + pushObject.toString());
-        benchmark.printElapsedTime();
-        System.out.println();
+
+        return ExcelWriter.generateTestResult("Stack add()", pushObject, benchmark);
     }
 
     public static void testStackPopOperation(int stackSize, Object pushObject) {

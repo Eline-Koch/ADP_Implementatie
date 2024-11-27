@@ -100,7 +100,6 @@ public class DequeTest {
         Deque<Object> deque = new Deque<>();
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
 
-        // Vul de deque eerst met data
         for (int i = 0; i < dequeSize; i++) {
             deque.insertLeft(insertObject);
         }
