@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+
 
 public class DynamicArrayTest {
     public static void main(String[] args) throws IOException {
@@ -134,16 +134,29 @@ public class DynamicArrayTest {
         }
     }
 
+//    add() DynamicArray (O)N?
+//    numOperations: 1000, arraySize: 100000, nanoseconds: 23800
+//    numOperations: 10000, arraySize: 100000, nanoseconds: 153400
+//    numOperations: 100000, arraySize: 100000, nanoseconds: 2401100
+//
+//    add() DoublyLinkedList (0)N^2?
+//    numOperations: 1000, arraySize: 100000, nanoseconds: 35700
+//    numOperations: 10000, arraySize: 100000, nanoseconds: 340100
+//    numOperations: 100000, arraySize: 100000, nanoseconds: 26790000
+
+//    Bij DynamicArray gaat add() sneller, omdat je aan het einde van de array/lijst toevoegt.
+//    Hierdoor hoef je geen elementen van plek te verschuiven.
+//    Bij invoegen in het midden zou een DoublyLinkedList sneller zijn.
     public void performAddPerformanceTest(int arraySize, int numOperations) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
-        Random rn = new Random();
+
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(rn.nextInt());
+            dynamicArray.add(1);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.add(rn.nextInt());
+            dynamicArray.add(1);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -152,14 +165,13 @@ public class DynamicArrayTest {
 
     public void performGetPerformanceTest(int arraySize, int numOperations) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
-        Random rn = new Random();
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(rn.nextInt());
+            dynamicArray.add(1);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.get(rn.nextInt(dynamicArray.size()));
+            dynamicArray.get(1);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -168,14 +180,13 @@ public class DynamicArrayTest {
 
     public void performSetPerformanceTest(int arraySize, int numOperations) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
-        Random rn = new Random();
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(rn.nextInt());
+            dynamicArray.add(1);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.set(rn.nextInt(dynamicArray.size()), rn.nextInt());
+            dynamicArray.set(dynamicArray.size() / 2, 1);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -184,14 +195,14 @@ public class DynamicArrayTest {
 
     public void performRemoveIndexPerformanceTest(int arraySize, int numOperations) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
-        Random rn = new Random();
+
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(rn.nextInt());
+            dynamicArray.add(1);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.remove(rn.nextInt(dynamicArray.size()));
+            dynamicArray.remove(dynamicArray.size() / 2);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");

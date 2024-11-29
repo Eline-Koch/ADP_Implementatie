@@ -2,14 +2,12 @@ import java.io.IOException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.adp_implementatie.DoublyLinkedList;
-import org.adp_implementatie.DynamicArray;
 
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class DoublyLinkedListTest {
     public static void main(String[] args) throws IOException {
@@ -137,14 +135,14 @@ public class DoublyLinkedListTest {
 
     public void performAddPerformanceTest(int arraySize, int numOperations) {
         DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
-        Random rn = new Random();
+
         for(int i = 0; i < arraySize; i++){
-            doublyLinkedList.add(rn.nextInt());
+            doublyLinkedList.add(1);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            doublyLinkedList.add(rn.nextInt());
+            doublyLinkedList.add(1);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -153,14 +151,14 @@ public class DoublyLinkedListTest {
 
     public void performGetPerformanceTest(int arraySize, int numOperations) {
         DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
-        Random rn = new Random();
+
         for(int i = 0; i < arraySize; i++){
-            doublyLinkedList.add(rn.nextInt());
+            doublyLinkedList.add(1);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            doublyLinkedList.get(rn.nextInt(doublyLinkedList.size()));
+            doublyLinkedList.get(1);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -169,14 +167,14 @@ public class DoublyLinkedListTest {
 
     public void performSetPerformanceTest(int arraySize, int numOperations) {
         DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
-        Random rn = new Random();
+
         for(int i = 0; i < arraySize; i++){
-            doublyLinkedList.add(rn.nextInt());
+            doublyLinkedList.add(1);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            doublyLinkedList.set(rn.nextInt(doublyLinkedList.size()), rn.nextInt());
+            doublyLinkedList.set(doublyLinkedList.size() / 2, 1);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -185,14 +183,14 @@ public class DoublyLinkedListTest {
 
     public void performRemoveIndexPerformanceTest(int arraySize, int numOperations) {
         DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
-        Random rn = new Random();
+
         for(int i = 0; i < arraySize; i++){
-            doublyLinkedList.add(rn.nextInt());
+            doublyLinkedList.add(1);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            doublyLinkedList.remove(rn.nextInt(doublyLinkedList.size()));
+            doublyLinkedList.remove(doublyLinkedList.size() / 2);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
