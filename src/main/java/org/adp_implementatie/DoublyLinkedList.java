@@ -1,6 +1,6 @@
 package org.adp_implementatie;
 
-public class DoublyLinkedList<E> {
+public class DoublyLinkedList<E extends Comparable<E>> {
 
     private static class Node<E> {
         E data;
@@ -105,7 +105,7 @@ public class DoublyLinkedList<E> {
     public boolean contains(E element) {
         Node<E> current = head;
         while (current != null) {
-            if (current.data.equals(element)) {
+            if (current.data.compareTo(element) == 0) {
                 return true;
             }
             current = current.next;
@@ -117,7 +117,7 @@ public class DoublyLinkedList<E> {
         Node<E> current = head;
         int index = 0;
         while (current != null) {
-            if (current.data.equals(element)) {
+            if (current.data.compareTo(element) == 0) {
                 return index;
             }
             current = current.next;
