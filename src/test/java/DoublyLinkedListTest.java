@@ -2,6 +2,7 @@ import java.io.IOException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.adp_implementatie.DoublyLinkedList;
+import org.adp_implementatie.DynamicArray;
 
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -14,6 +15,7 @@ public class DoublyLinkedListTest {
     public static void main(String[] args) throws IOException {
         DoublyLinkedListTest test = new DoublyLinkedListTest();
         test.performDataSetTest();
+        test.containsObjectTest();
         test.performPerformanceTest();
     }
 
@@ -29,14 +31,39 @@ public class DoublyLinkedListTest {
             String key = entry.getKey();
             List<Object> value = entry.getValue();
 
-            DoublyLinkedList<Object> doublyLinkedList = new DoublyLinkedList<>();
+            DoublyLinkedList<Double> doublyLinkedList = new DoublyLinkedList<>();
             for (Object o : value) {
-                doublyLinkedList.add(o);
+                if (o != null) {
+                    if (o instanceof Double) {
+                        doublyLinkedList.add((Double) o);
+                    } else if (o instanceof Integer) {
+                        doublyLinkedList.add(((Integer) o).doubleValue());
+                    } else {
+                        System.out.println("Cannot add \"o\" to array, because \"o\" is of type" + o.getClass().getName());
+                    }
+                }
+                else {
+                    System.out.println("Cannot add \"o\" to array, because \"o\" is null");
+                }
             }
-
             System.out.print(key + ": ");
             doublyLinkedList.printList();
         }
+    }
+
+    //contains method should compare the value of an Object, not the reference
+    public void containsObjectTest() {
+        System.out.println();
+        System.out.println("containsObject");
+
+        DoublyLinkedList<Pizza> doublyLinkedList = new DoublyLinkedList<>();
+        Pizza pizza1 = new Pizza("mozarella", true);
+        Pizza pizza2 = new Pizza("mozarella", true);
+
+        doublyLinkedList.add(pizza1);
+
+        System.out.println("same reference, same value: " + doublyLinkedList.contains(pizza1));
+        System.out.println("different reference, same value: " + doublyLinkedList.contains(pizza2));
     }
 
     public void performPerformanceTest() {

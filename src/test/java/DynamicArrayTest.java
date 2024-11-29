@@ -14,6 +14,7 @@ public class DynamicArrayTest {
     public static void main(String[] args) throws IOException {
         DynamicArrayTest test = new DynamicArrayTest();
         test.performDataSetTest();
+        test.containsObjectTest();
         test.performPerformanceTest();
     }
 
@@ -29,14 +30,39 @@ public class DynamicArrayTest {
             String key = entry.getKey();
             List<Object> value = entry.getValue();
 
-            DynamicArray<Object> dynamicArray = new DynamicArray<>();
+            DynamicArray<Double> dynamicArray = new DynamicArray<>();
             for (Object o : value) {
-                dynamicArray.add(o);
+                if (o != null) {
+                    if (o instanceof Double) {
+                        dynamicArray.add((Double) o);
+                    } else if (o instanceof Integer) {
+                        dynamicArray.add(((Integer) o).doubleValue());
+                    } else {
+                        System.out.println("Cannot add \"o\" to array, because \"o\" is of type" + o.getClass().getName());
+                    }
+                }
+                else {
+                    System.out.println("Cannot add \"o\" to array, because \"o\" is null");
+                }
             }
-
             System.out.print(key + ": ");
             dynamicArray.printArray();
         }
+    }
+
+    //contains method should compare the value of an Object, not the reference
+    public void containsObjectTest() {
+        System.out.println();
+        System.out.println("containsObject");
+
+        DynamicArray<Pizza> dynamicArray = new DynamicArray<>();
+        Pizza pizza1 = new Pizza("mozarella", true);
+        Pizza pizza2 = new Pizza("mozarella", true);
+
+        dynamicArray.add(pizza1);
+
+        System.out.println("same reference, same value: " + dynamicArray.contains(pizza1));
+        System.out.println("different reference, same value: " + dynamicArray.contains(pizza2));
     }
 
     public void performPerformanceTest() {

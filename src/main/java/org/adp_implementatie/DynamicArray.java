@@ -3,14 +3,14 @@ package org.adp_implementatie;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class DynamicArray<E> {
+public class DynamicArray<E extends Comparable<E>> {
     private static final int DEFAULT_CAPACITY = 10;
     private E[] array;
     private int size;
 
     @SuppressWarnings("unchecked")
     public DynamicArray() {
-        this.array = (E[]) new Object[DEFAULT_CAPACITY];
+        this.array = (E[]) new Comparable[DEFAULT_CAPACITY];
         this.size = 0;
     }
 
@@ -82,13 +82,11 @@ public class DynamicArray<E> {
         }
     }
 
-    public boolean contains(E element) {
-        return indexOf(element) != -1;
-    }
+    public boolean contains(E element) {return indexOf(element) != -1;}
 
     public int indexOf(E element) {
         for (int i = 0; i < size; i++) {
-            if (array[i].equals(element)) {
+            if (array[i].compareTo(element) == 0) {
                 return i;
             }
         }
@@ -156,6 +154,7 @@ public class DynamicArray<E> {
     public static void main(String[] args) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
         dynamicArray.add(1);
+        System.out.println(dynamicArray.contains(1));
         dynamicArray.add(2);
         dynamicArray.add(3);
         dynamicArray.remove(1);
