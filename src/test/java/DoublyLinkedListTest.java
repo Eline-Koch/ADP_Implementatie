@@ -37,11 +37,11 @@ public class DoublyLinkedListTest {
                     } else if (o instanceof Integer) {
                         doublyLinkedList.add(((Integer) o).doubleValue());
                     } else {
-                        System.out.println("Cannot add \"o\" to array, because \"o\" is of type" + o.getClass().getName());
+                        System.out.println("Cannot add \"o\" to list, because \"o\" is of type" + o.getClass().getName());
                     }
                 }
                 else {
-                    System.out.println("Cannot add \"o\" to array, because \"o\" is null");
+                    System.out.println("Cannot add \"o\" to list, because \"o\" is null");
                 }
             }
             System.out.print(key + ": ");
@@ -145,7 +145,7 @@ public class DoublyLinkedListTest {
             doublyLinkedList.add(i);
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 
@@ -161,7 +161,7 @@ public class DoublyLinkedListTest {
             doublyLinkedList.get(i / 100);
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 
@@ -177,7 +177,7 @@ public class DoublyLinkedListTest {
             doublyLinkedList.set(doublyLinkedList.size() / 2, i);
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 
@@ -193,7 +193,7 @@ public class DoublyLinkedListTest {
             doublyLinkedList.remove(doublyLinkedList.size() / 2);
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 
@@ -208,7 +208,7 @@ public class DoublyLinkedListTest {
             doublyLinkedList.remove(Integer.valueOf(i + doublyLinkedList.size() / 2));
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 
@@ -228,7 +228,7 @@ public class DoublyLinkedListTest {
             }
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 
@@ -243,7 +243,7 @@ public class DoublyLinkedListTest {
             doublyLinkedList.indexOf(i + doublyLinkedList.size() / 2);
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 }
