@@ -2,34 +2,37 @@ package org.adp_implementatie;
 
 public class InsertionSort {
 
-    public static int[] insertionSort(int[] a) {
-        printArray(a);
-        System.out.println("start");
-        for (int i = 1; i < a.length; i++) {
-
-            int toBeInserted = a[i];
+    public static <T extends Comparable<T>> T[] insertionSort(T[] array) {
+        for (int i = 1; i < array.length; i++) {
+            // Element dat moet worden ingevoegd
+            T toBeInserted = array[i];
             int j = i;
-            while (j > 0 && toBeInserted < a[j - 1]) {
-                printArray(a);
 
-                a[j] = a[j - 1];
+            // Verplaats grotere elementen naar rechts
+            while (j > 0 && toBeInserted.compareTo(array[j - 1]) < 0) {
+                printArray(array);
+                array[j] = array[j - 1];
                 j--;
             }
-            a[j] = toBeInserted;
+            array[j] = toBeInserted;
         }
-        return a;
+        return array;
     }
+
 
     public static void main(String[] args) {
-        int[] ints = {4, 11, 1, 7, 5};
+        Integer[] numbers = {5, 2, 9, 1, 5, 6};
+        printArray(insertionSort(numbers));
 
-        printArray(insertionSort(ints));
+        String[] words = {"banana", "apple", "cherry"};
+        printArray(insertionSort(words));
     }
 
-    public static void printArray(int[] array){
+
+    public static <T extends Comparable<T>> void printArray(T[] array){
         System.out.print("[");
-        for (int integer : array) {
-            System.out.print(integer + ", ");
+        for (T item : array) {
+            System.out.print(item + ", ");
         }
         System.out.println("] ");
     }
