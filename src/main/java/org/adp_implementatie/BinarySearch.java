@@ -9,11 +9,11 @@ public class BinarySearch {
      */
     public static <T extends Comparable<T>> int binarySearch(T[] array, T target, int left, int right) {
         // Print het deel van de array dat momenteel wordt doorzocht
-        System.out.print("Zoeken in: [");
-        for (int i = left; i <= right; i++) {
-            System.out.print(array[i] + (i < right ? ", " : ""));
-        }
-        System.out.print("] ");
+//        System.out.print("Zoeken in: [");
+//        for (int i = left; i <= right; i++) {
+//            System.out.print(array[i] + (i < right ? ", " : ""));
+//        }
+//        System.out.print("] ");
 
 
         if (left > right) { // Error handling: als het deel leeg is (item niet gevonden)
@@ -22,17 +22,17 @@ public class BinarySearch {
 
         // Bereken het midden
         int mid = left + (right - left) / 2;
-        System.out.println("zoekpositie in array: array[" + mid + "] = " + array[mid]);
+//        System.out.println("zoekpositie in array: array[" + mid + "] = " + array[mid]);
 
 
         if (array[mid].compareTo(target) == 0) {
-            System.out.println("Gevonden op index: " + mid);
+            System.out.println(target + " = Gevonden op index: " + mid);
             return mid; // Doel gevonden
         } else if (array[mid].compareTo(target) < 0) { // -1 comparable -> target is groter dan huidige positie
-            System.out.println("Ga naar rechterhelft");
+//            System.out.println("Ga naar rechterhelft");
             return binarySearch(array, target, mid + 1, right);
         } else {
-            System.out.println("Ga naar linkerhelft");
+//            System.out.println("Ga naar linkerhelft");
             return binarySearch(array, target, left, mid - 1); // +1 comparable -> target is kleiner dan huidige positie
         }
     }
