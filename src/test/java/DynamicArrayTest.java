@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+
 
 public class DynamicArrayTest {
     public static void main(String[] args) throws IOException {
@@ -68,10 +68,25 @@ public class DynamicArrayTest {
     public void performPerformanceTest() {
         System.out.println();
         System.out.println("performance tests");
-        System.out.println("add");
+
 
         int[] arraySize = {1000, 10000, 100000};
         int[] numOperations = {1000, 10000, 100000};
+
+        System.out.println("add");
+//        add DynamicArray (O)1
+//        numOperations: 1000, arraySize: 100000, nanoseconds: 39800
+//        numOperations: 10000, arraySize: 100000, nanoseconds: 128301
+//        numOperations: 100000, arraySize: 100000, nanoseconds: 1804800
+//
+//        add DoublyLinkedList (0)1
+//        numOperations: 1000, arraySize: 100000, nanoseconds: 55700
+//        numOperations: 10000, arraySize: 100000, nanoseconds: 180501
+//        numOperations: 100000, arraySize: 100000, nanoseconds: 1892600
+//
+//        Tijd per operatie ongeveer constant, verschil tussen DynamicArray en DoublyLinkedList klein,
+//        omdat aan het einde van de array toegevoegd wordt,
+//        dus hoeven er alleen elementen verplaats worden als de array verdubbeld wordt.
 
         for (int size : arraySize) {
             for (int num : numOperations) {
@@ -81,6 +96,19 @@ public class DynamicArrayTest {
 
         System.out.println();
         System.out.println("get");
+//        get DynamicArray (O)1
+//        numOperations: 1000, arraySize: 100000, nanoseconds: 11301
+//        numOperations: 10000, arraySize: 100000, nanoseconds: 39699
+//        numOperations: 100000, arraySize: 100000, nanoseconds: 385000
+//
+//        get DoublyLinkedList (O)N
+//        numOperations: 1000, arraySize: 100000, nanoseconds: 60100
+//        numOperations: 10000, arraySize: 100000, nanoseconds: 415800
+//        numOperations: 100000, arraySize: 100000, nanoseconds: 55783401
+//
+//        Bij de DynamicArray is de tijd per operatie ongeveer constant.
+//        Bij de DoublyLinkedList neemt de tijd linear toe met de lengte van de lijst,
+//        omdat daar vanaf de head of tail door elke node 'geloopt' wordt tot aan de juiste index.
 
         for (int size : arraySize) {
             for (int num : numOperations) {
@@ -90,6 +118,19 @@ public class DynamicArrayTest {
 
         System.out.println();
         System.out.println("set");
+//        set DynamicArray (O)1 (of minder?)
+//        numOperations: 1000, arraySize: 100000, nanoseconds: 32300
+//        numOperations: 10000, arraySize: 100000, nanoseconds: 102499
+//        numOperations: 100000, arraySize: 100000, nanoseconds: 575900
+//
+//        set DoublyLinkedList (O)1
+//        numOperations: 1000, arraySize: 100000, nanoseconds: 63458600
+//        numOperations: 10000, arraySize: 100000, nanoseconds: 629875699
+//        numOperations: 100000, arraySize: 100000, nanoseconds: 6149531800
+//
+//        Het is raar dat de tijd per operatie bij DoublyLinkedList hier bijna constant lijkt.
+//        Maar het is nog steeds zo dat de index vinden
+//        en de waarde aanpassen veel langer duurt bij de DoublyLinkedList, 6149531800 / 575900 = 10678.
 
         for (int size : arraySize) {
             for (int num : numOperations) {
@@ -136,14 +177,14 @@ public class DynamicArrayTest {
 
     public void performAddPerformanceTest(int arraySize, int numOperations) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
-        Random rn = new Random();
+
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(rn.nextInt());
+            dynamicArray.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.add(rn.nextInt());
+            dynamicArray.add(i);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -152,14 +193,13 @@ public class DynamicArrayTest {
 
     public void performGetPerformanceTest(int arraySize, int numOperations) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
-        Random rn = new Random();
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(rn.nextInt());
+            dynamicArray.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.get(rn.nextInt(dynamicArray.size()));
+            dynamicArray.get(i / 100);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -168,14 +208,13 @@ public class DynamicArrayTest {
 
     public void performSetPerformanceTest(int arraySize, int numOperations) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
-        Random rn = new Random();
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(rn.nextInt());
+            dynamicArray.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.set(rn.nextInt(dynamicArray.size()), rn.nextInt());
+            dynamicArray.set(dynamicArray.size() / 2, i);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -184,14 +223,14 @@ public class DynamicArrayTest {
 
     public void performRemoveIndexPerformanceTest(int arraySize, int numOperations) {
         DynamicArray<Integer> dynamicArray = new DynamicArray<>();
-        Random rn = new Random();
+
         for(int i = 0; i < arraySize; i++){
-            dynamicArray.add(rn.nextInt());
+            dynamicArray.add(1);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            dynamicArray.remove(rn.nextInt(dynamicArray.size()));
+            dynamicArray.remove(dynamicArray.size() / 2);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
