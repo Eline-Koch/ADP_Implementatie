@@ -137,12 +137,12 @@ public class DoublyLinkedListTest {
         DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
 
         for(int i = 0; i < arraySize; i++){
-            doublyLinkedList.add(1);
+            doublyLinkedList.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            doublyLinkedList.add(1);
+            doublyLinkedList.add(i);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -153,12 +153,12 @@ public class DoublyLinkedListTest {
         DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
 
         for(int i = 0; i < arraySize; i++){
-            doublyLinkedList.add(1);
+            doublyLinkedList.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            doublyLinkedList.get(1);
+            doublyLinkedList.get(i / 100);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -169,12 +169,12 @@ public class DoublyLinkedListTest {
         DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
 
         for(int i = 0; i < arraySize; i++){
-            doublyLinkedList.add(1);
+            doublyLinkedList.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            doublyLinkedList.set(doublyLinkedList.size() / 2, 1);
+            doublyLinkedList.set(doublyLinkedList.size() / 2, i);
         }
 
         System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
@@ -185,7 +185,7 @@ public class DoublyLinkedListTest {
         DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
 
         for(int i = 0; i < arraySize; i++){
-            doublyLinkedList.add(1);
+            doublyLinkedList.add(i);
         }
 
         long startingTime = System.nanoTime();
