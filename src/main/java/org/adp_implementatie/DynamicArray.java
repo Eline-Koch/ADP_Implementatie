@@ -108,6 +108,25 @@ public class DynamicArray<E extends Comparable<E>> {
     }
 
     @SuppressWarnings("unchecked")
+//    public static <T> T[] copyOf(T[] original, int newLength) {
+//        if (original == null) {
+//            throw new NullPointerException("Original array cannot be null");
+//        }
+//        if (newLength < 0) {
+//            throw new NegativeArraySizeException("New length cannot be negative");
+//        }
+//
+//        // Create a new array with the same component type and the desired length
+//        T[] newArray = (T[]) Array.newInstance(original.getClass().getComponentType(), newLength);
+//
+//        // Copy elements manually
+//        for (int i = 0; i < Math.min(original.length, newLength); i++) {
+//            newArray[i] = original[i];
+//        }
+//
+//        return newArray;
+//    }
+
     public static <T> T[] copyOf(T[] original, int newLength) {
         if (original == null) {
             throw new NullPointerException("Original array cannot be null");
@@ -116,11 +135,14 @@ public class DynamicArray<E extends Comparable<E>> {
             throw new NegativeArraySizeException("New length cannot be negative");
         }
 
-        // Create a new array with the same component type and the desired length
-        T[] newArray = (T[]) Array.newInstance(original.getClass().getComponentType(), newLength);
+        // Nieuwe array maken
+        T[] newArray = (T[]) new Object[newLength];
 
-        // Copy elements manually
-        for (int i = 0; i < Math.min(original.length, newLength); i++) {
+        // Bereken de maximale index tot waar gekopieerd moet worden
+        int lengthToCopy = (original.length < newLength) ? original.length : newLength;
+
+        // Kopieer elementen handmatig
+        for (int i = 0; i < lengthToCopy; i++) {
             newArray[i] = original[i];
         }
 
