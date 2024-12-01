@@ -8,8 +8,6 @@ public class InsertionSortTest {
 
         Integer[] largeArray = new Integer[1000];
 
-//        int target = 99999999;
-
         int n = largeArray.length; // Stel de lengte van de array in
 
         // Vul de array achterstevoren
