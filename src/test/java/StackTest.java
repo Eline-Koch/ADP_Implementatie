@@ -17,29 +17,33 @@ public class StackTest {
         performDataSetTest();
 
         int[] stackSize = {1000, 10000, 100000, 1000000, 10000000, 100000000};
+        System.out.println("Each time the data set is 10x bigger");
 
-        System.out.println(stackSize[0]);
+        System.out.println("Stack add");
         for (int i : stackSize) {
-            System.out.println(i);
             testStackAddOperation(i, "String insert");
         }
 
+        System.out.println("Stack add: pizza");
         for (int i : stackSize) {
             testStackAddOperation(i, pizza);
         }
 
+        System.out.println("Stack add: [1, 3, 4]");
         for (int i : stackSize) {
             testStackAddOperation(i, new int[]{1, 3, 4});
         }
-
+        System.out.println("Stack pop: 1");
         for (int i : stackSize) {
             testStackPopOperation(i, 1);
         }
 
+        System.out.println("Stack peek: 1");
         for (int i : stackSize) {
             testStackPeekOperation(i, 1);
         }
 
+        System.out.println("Stack top: 1");
         for (int i : stackSize) {
             testStackTopOperation(i, 1);
         }
@@ -76,9 +80,9 @@ public class StackTest {
             stack.push(pushObject);
         }
         benchmark.stop();
-        System.out.println("Stack add met size: " + stackSize + " Object to insert: " + pushObject.toString());
+//        System.out.println("Stack add met size: " + stackSize + " Object to insert: " + pushObject.toString());
         benchmark.printElapsedTime();
-        System.out.println();
+//        System.out.println();
     }
 
     public static void testStackPopOperation(int stackSize, Object pushObject) {
@@ -94,9 +98,9 @@ public class StackTest {
             stack.pop();
         }
         benchmark.stop();
-        System.out.println("Stack Pop met size: " + stackSize + " Object to delete: " + pushObject.toString());
+//        System.out.println("Stack Pop met size: " + stackSize + " Object to delete: " + pushObject.toString());
         benchmark.printElapsedTime();
-        System.out.println();
+//        System.out.println();
     }
 
     public static void testStackPeekOperation(int stackSize, Object pushObject) {
@@ -110,9 +114,9 @@ public class StackTest {
         benchmark.start();
         stack.peek();
         benchmark.stop();
-        System.out.println("Stack Peek met size: " + stackSize + " Object to peek: " + pushObject.toString());
+//        System.out.println("Stack Peek met size: " + stackSize + " Object to peek: " + pushObject.toString());
         benchmark.printElapsedTime();
-        System.out.println();
+//        System.out.println();
     }
 
     public static void testStackTopOperation(int stackSize, Object pushObject) {
@@ -128,8 +132,8 @@ public class StackTest {
             stack.top();
         }
         benchmark.stop();
-        System.out.println("Stack Top met size: " + stackSize + " Object to top: " + pushObject.toString());
+//        System.out.println("Stack Top met size: " + stackSize + " Object to top: " + pushObject.toString());
         benchmark.printElapsedTime();
-        System.out.println();
+//        System.out.println();
     }
 }
