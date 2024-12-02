@@ -10,7 +10,7 @@ public class InsertionSort {
 
             // Verplaats grotere elementen naar rechts
             while (j > 0 && toBeInserted.compareTo(array[j - 1]) < 0) {
-                printArray(array);
+//                printArray(array);
                 array[j] = array[j - 1];
                 j--;
             }

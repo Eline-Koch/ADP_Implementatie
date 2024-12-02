@@ -18,17 +18,22 @@ public class DequeTest {
 
         performDequeDataSetTest();
 
+        System.out.println("Each time the data set is 10x bigger");
+        System.out.println("Insert left");
         for (int size : dequeSizes) {
             testDequeInsertLeft(size, "String insert");
         }
-
+        System.out.println("Insert right");
         for (int size : dequeSizes) {
             testDequeInsertRight(size, pizza);
         }
 
+        System.out.println("Remove left");
+
         for (int size : dequeSizes) {
             testDequeRemoveLeft(size, 1);
         }
+        System.out.println("Remove right");
 
         for (int size : dequeSizes) {
             testDequeRemoveRight(size, 1);
@@ -76,9 +81,9 @@ public class DequeTest {
         }
         benchmark.stop();
 
-        System.out.println("Deque Insert Left met size: " + dequeSize + " Object to insert: " + insertObject.toString());
+//        System.out.println("Deque Insert Left met size: " + dequeSize + " Object to insert: " + insertObject.toString());
         benchmark.printElapsedTime();
-        System.out.println();
+//        System.out.println();
     }
 
     public static void testDequeInsertRight(int dequeSize, Object insertObject) {
@@ -91,9 +96,9 @@ public class DequeTest {
         }
         benchmark.stop();
 
-        System.out.println("Deque Insert Right met size: " + dequeSize + " Object to insert: " + insertObject.toString());
+//        System.out.println("Deque Insert Right met size: " + dequeSize + " Object to insert: " + insertObject.toString());
         benchmark.printElapsedTime();
-        System.out.println();
+//        System.out.println();
     }
 
     public static void testDequeRemoveLeft(int dequeSize, Object insertObject) {
@@ -111,9 +116,9 @@ public class DequeTest {
         }
         benchmark.stop();
 
-        System.out.println("Deque Remove Left met size: " + dequeSize + " Object to remove: " + insertObject.toString());
+//        System.out.println("Deque Remove Left met size: " + dequeSize + " Object to remove: " + insertObject.toString());
         benchmark.printElapsedTime();
-        System.out.println();
+//        System.out.println();
     }
 
     public static void testDequeRemoveRight(int dequeSize, Object insertObject) {
@@ -130,8 +135,8 @@ public class DequeTest {
         }
         benchmark.stop();
 
-        System.out.println("Deque Remove Right met size: " + dequeSize + " Object to remove: " + insertObject.toString());
+//        System.out.println("Deque Remove Right met size: " + dequeSize + " Object to remove: " + insertObject.toString());
         benchmark.printElapsedTime();
-        System.out.println();
+//        System.out.println();
     }
 }
