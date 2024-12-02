@@ -13,20 +13,19 @@ import java.util.Map;
 
 //performance tests
 //add
-//numOperations: 10000000, size: 100000, seconds: 0.2362952
-//numOperations: 10000000, size: 1000000, seconds: 0.2926773
-//numOperations: 10000000, size: 10000000, seconds: 0.2653106
+//numOperations: 10000000, size: 100000, seconds: 0.216892600 seconden
+//numOperations: 10000000, size: 1000000, seconds: 0.268272200 seconden
+//numOperations: 10000000, size: 10000000, seconds: 0.246516400 seconden
 //
 //peek
-//numOperations: 10000000, size: 100000, seconds: 0.0051822
-//numOperations: 10000000, size: 1000000, seconds: 4.7E-6
-//numOperations: 10000000, size: 10000000, seconds: 1.6E-6
+//numOperations: 10000000, size: 100000, seconds: 0.006253500 seconden
+//numOperations: 10000000, size: 1000000, seconds: 0.000004200 seconden
+//numOperations: 10000000, size: 10000000, seconds: 0.000001700 seconden
 //
 //poll
-//numOperations: 100000, size: 200000, seconds: 0.002705
-//numOperations: 100000, size: 2000000, seconds: 0.0018176
-//numOperations: 100000, size: 20000000, seconds: 4.57E-4
-//
+//numOperations: 100000, size: 200000, seconds: 0.002906700 seconden
+//numOperations: 100000, size: 2000000, seconds: 0.000570200 seconden
+//numOperations: 100000, size: 20000000, seconds: 0.000737200 seconden
 // Bij een grotere heap (opgeslagen in een array) worden de operaties allemaal sneller???
 
 public class PriorityQueueTest {
