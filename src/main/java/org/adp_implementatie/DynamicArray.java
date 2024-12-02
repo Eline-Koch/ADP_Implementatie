@@ -63,7 +63,7 @@ public class DynamicArray<E extends Comparable<E>> {
     }
 
     @SuppressWarnings("unchecked")
-    public E[] copyArray(E[] original, int newLength, boolean elementRemoved, int removedIndex) {
+    public E[] copyArray(E[] original, int newLength, boolean isElementRemoved, int removedIndex) {
         if (original == null) {
             throw new NullPointerException("Original array cannot be null");
         }
@@ -79,7 +79,7 @@ public class DynamicArray<E extends Comparable<E>> {
 
         // Kopieer elementen handmatig
         for (int i = 0; i < lengthToCopy; i++) {
-            if (elementRemoved && i > removedIndex){
+            if (isElementRemoved && i > removedIndex){
                 newArray[i - 1] = original[i];
             }
             newArray[i] = original[i];
