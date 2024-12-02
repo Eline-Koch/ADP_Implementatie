@@ -26,7 +26,7 @@ import java.util.Map;
 //numOperations: 100000, size: 200000, seconds: 0.002906700 seconden
 //numOperations: 100000, size: 2000000, seconds: 0.000570200 seconden
 //numOperations: 100000, size: 20000000, seconds: 0.000737200 seconden
-// Bij een grotere heap (opgeslagen in een array) worden de operaties allemaal sneller???
+// Bij een grotere heap (opgeslagen in een array) worden add en peek sneller?
 
 public class PriorityQueueTest {
 
