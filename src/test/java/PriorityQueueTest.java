@@ -128,7 +128,7 @@ public class PriorityQueueTest {
         benchmark.stop();
 
         System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", seconds: ");
-        System.out.println(benchmark.getElapsedTimeInSeconds());
+       benchmark.printElapsedTime();
     }
 
     public void performPeekPerformanceTest(int arraySize, int numOperations) {
@@ -145,7 +145,8 @@ public class PriorityQueueTest {
         benchmark.stop();
 
         System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", seconds: ");
-        System.out.println(benchmark.getElapsedTimeInSeconds());
+        benchmark.printElapsedTime();
+
     }
 
     public void performPollPerformanceTest(int arraySize, int numOperations) {
@@ -162,6 +163,7 @@ public class PriorityQueueTest {
         benchmark.stop();
 
         System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", seconds: ");
-        System.out.println(benchmark.getElapsedTimeInSeconds());
+        benchmark.printElapsedTime();
+
     }
 }
