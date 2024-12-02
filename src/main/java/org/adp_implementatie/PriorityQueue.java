@@ -2,13 +2,16 @@ package org.adp_implementatie;
 
 
 public class PriorityQueue <E extends Comparable<E>> {
+
+    private static final int DEFAULT_CAPACITY = 10;
     private E[] heap; // Array om de heap op te slaan
     private int size;   // Huidige grootte van de heap
     private int capacity; // Maximale capaciteit van de heap
 
     // Constructor
-    public PriorityQueue(int capacity) {
-        this.capacity = capacity;
+    @SuppressWarnings("unchecked")
+    public PriorityQueue() {
+        this.capacity = DEFAULT_CAPACITY;
         this.size = 0;
         this.heap = (E[]) new Comparable[capacity];
     }
@@ -56,6 +59,7 @@ public class PriorityQueue <E extends Comparable<E>> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public E[] copyArray(E[] original, int newLength) {
         if (original == null) {
             throw new NullPointerException("Original array cannot be null");
@@ -126,9 +130,19 @@ public class PriorityQueue <E extends Comparable<E>> {
         return size;
     }
 
-    // Testprogramma
+    public void printHeap() {
+        System.out.print("[");
+        for (int i = 0; i < size; i++) {
+            System.out.print(heap[i]);
+            if (i < size - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+    }
+
     public static void main(String[] args) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>(10);
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
 
         pq.add(10);
         pq.add(5);

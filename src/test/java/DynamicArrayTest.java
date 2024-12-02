@@ -87,7 +87,8 @@ public class DynamicArrayTest {
 //        Tijd per operatie ongeveer constant, verschil tussen DynamicArray en DoublyLinkedList klein,
 //        omdat aan het einde van de array toegevoegd wordt,
 //        dus hoeven er alleen elementen verplaats worden als de array verdubbeld wordt.
-//        Raar de dat middelste (size 10000) bij beide het snelste is.
+//        De middelste (size 10000) is bij beide het snelste,
+//        dit heeft waarschijnlijk te maken met hoe vaak de array verdubbeld wordt en hoe lang het duurt om dit te doen.
 
         for (int size : arraySize) {
             for (int num : numOperations) {
