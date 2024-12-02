@@ -8,12 +8,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class DoublyLinkedListTest {
     public static void main(String[] args) throws IOException {
         DoublyLinkedListTest test = new DoublyLinkedListTest();
         test.performDataSetTest();
+        test.containsObjectTest();
         test.performPerformanceTest();
     }
 
@@ -29,14 +29,39 @@ public class DoublyLinkedListTest {
             String key = entry.getKey();
             List<Object> value = entry.getValue();
 
-            DoublyLinkedList<Object> doublyLinkedList = new DoublyLinkedList<>();
+            DoublyLinkedList<Double> doublyLinkedList = new DoublyLinkedList<>();
             for (Object o : value) {
-                doublyLinkedList.add(o);
+                if (o != null) {
+                    if (o instanceof Double) {
+                        doublyLinkedList.add((Double) o);
+                    } else if (o instanceof Integer) {
+                        doublyLinkedList.add(((Integer) o).doubleValue());
+                    } else {
+                        System.out.println("Cannot add \"o\" to list, because \"o\" is of type" + o.getClass().getName());
+                    }
+                }
+                else {
+                    System.out.println("Cannot add \"o\" to list, because \"o\" is null");
+                }
             }
-
             System.out.print(key + ": ");
             doublyLinkedList.printList();
         }
+    }
+
+    //contains method should compare the value of an Object, not the reference
+    public void containsObjectTest() {
+        System.out.println();
+        System.out.println("containsObject");
+
+        DoublyLinkedList<Pizza> doublyLinkedList = new DoublyLinkedList<>();
+        Pizza pizza1 = new Pizza("mozarella", true);
+        Pizza pizza2 = new Pizza("mozarella", true);
+
+        doublyLinkedList.add(pizza1);
+
+        System.out.println("same reference, same value: " + doublyLinkedList.contains(pizza1));
+        System.out.println("different reference, same value: " + doublyLinkedList.contains(pizza2));
     }
 
     public void performPerformanceTest() {
@@ -76,7 +101,7 @@ public class DoublyLinkedListTest {
 
         for (int size : arraySize) {
             for (int num : numOperations) {
-                this.performRemoveIndexPerformanceTest(size * 20, num / 10);
+                this.performRemoveIndexPerformanceTest(size * 2, num / 100);
             }
         }
 
@@ -85,7 +110,7 @@ public class DoublyLinkedListTest {
 
         for (int size : arraySize) {
             for (int num : numOperations) {
-                this.performRemoveElementPerformanceTest(size * 20, num / 10);
+                this.performRemoveElementPerformanceTest(size * 2, num / 100);
             }
         }
 
@@ -94,7 +119,7 @@ public class DoublyLinkedListTest {
 
         for (int size : arraySize) {
             for (int num : numOperations) {
-                this.performContainsPerformanceTest(size * 10, num / 10);
+                this.performContainsPerformanceTest(size, num / 100);
             }
         }
 
@@ -103,72 +128,72 @@ public class DoublyLinkedListTest {
 
         for (int size : arraySize) {
             for (int num : numOperations) {
-                this.performIndexOfPerformanceTest(size * 10, num / 10);
+                this.performIndexOfPerformanceTest(size, num / 100);
             }
         }
     }
 
     public void performAddPerformanceTest(int arraySize, int numOperations) {
         DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
-        Random rn = new Random();
+
         for(int i = 0; i < arraySize; i++){
-            doublyLinkedList.add(rn.nextInt());
+            doublyLinkedList.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            doublyLinkedList.add(rn.nextInt());
+            doublyLinkedList.add(i);
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 
     public void performGetPerformanceTest(int arraySize, int numOperations) {
         DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
-        Random rn = new Random();
+
         for(int i = 0; i < arraySize; i++){
-            doublyLinkedList.add(rn.nextInt());
+            doublyLinkedList.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            doublyLinkedList.get(rn.nextInt(doublyLinkedList.size()));
+            doublyLinkedList.get(i / 100);
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 
     public void performSetPerformanceTest(int arraySize, int numOperations) {
         DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
-        Random rn = new Random();
+
         for(int i = 0; i < arraySize; i++){
-            doublyLinkedList.add(rn.nextInt());
+            doublyLinkedList.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            doublyLinkedList.set(rn.nextInt(doublyLinkedList.size()), rn.nextInt());
+            doublyLinkedList.set(doublyLinkedList.size() / 2, i);
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 
     public void performRemoveIndexPerformanceTest(int arraySize, int numOperations) {
         DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
-        Random rn = new Random();
+
         for(int i = 0; i < arraySize; i++){
-            doublyLinkedList.add(rn.nextInt());
+            doublyLinkedList.add(i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            doublyLinkedList.remove(rn.nextInt(doublyLinkedList.size()));
+            doublyLinkedList.remove(doublyLinkedList.size() / 2);
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 
@@ -183,7 +208,7 @@ public class DoublyLinkedListTest {
             doublyLinkedList.remove(Integer.valueOf(i + doublyLinkedList.size() / 2));
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 
@@ -203,7 +228,7 @@ public class DoublyLinkedListTest {
             }
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 
@@ -218,7 +243,7 @@ public class DoublyLinkedListTest {
             doublyLinkedList.indexOf(i + doublyLinkedList.size() / 2);
         }
 
-        System.out.print("numOperations: " + numOperations + ", arraySize: " + arraySize + ", nanoseconds: ");
+        System.out.print("numOperations: " + numOperations + ", size: " + arraySize + ", nanoseconds: ");
         System.out.println(System.nanoTime() - startingTime);
     }
 }

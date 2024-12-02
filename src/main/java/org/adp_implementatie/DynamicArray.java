@@ -1,15 +1,14 @@
 package org.adp_implementatie;
 
-import java.util.Arrays;
 
-public class DynamicArray<E> {
+public class DynamicArray<E extends Comparable<E>> {
     private static final int DEFAULT_CAPACITY = 10;
     private E[] array;
     private int size;
 
     @SuppressWarnings("unchecked")
     public DynamicArray() {
-        this.array = (E[]) new Object[DEFAULT_CAPACITY];
+        this.array = (E[]) new Comparable[DEFAULT_CAPACITY];
         this.size = 0;
     }
 
@@ -37,8 +36,9 @@ public class DynamicArray<E> {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
         E removedElement = (E) array[index];
-        System.arraycopy(array, index + 1, array, index, size - index - 1);
+        array = copyArray(array, array.length, true, index);
         array[--size] = null;
+        reduceCapacity(size + 1);
         return removedElement;
     }
 
@@ -51,23 +51,54 @@ public class DynamicArray<E> {
         return false;
     }
 
-    public boolean contains(E element) {
-        return indexOf(element) != -1;
-    }
+    public boolean contains(E element) {return indexOf(element) != -1;}
 
     public int indexOf(E element) {
         for (int i = 0; i < size; i++) {
-            if (array[i].equals(element)) {
+            if (array[i].compareTo(element) == 0) {
                 return i;
             }
         }
         return -1;
     }
 
+    @SuppressWarnings("unchecked")
+    public E[] copyArray(E[] original, int newLength, boolean isElementRemoved, int removedIndex) {
+        if (original == null) {
+            throw new NullPointerException("Original array cannot be null");
+        }
+        if (newLength < 0) {
+            throw new NegativeArraySizeException("New length cannot be negative");
+        }
+
+        // Nieuwe array maken
+        E[] newArray = (E[]) new Comparable[newLength];
+
+        // Bereken de maximale index tot waar gekopieerd moet worden
+        int lengthToCopy = (original.length < newLength) ? original.length : newLength;
+
+        // Kopieer elementen handmatig
+        for (int i = 0; i < lengthToCopy; i++) {
+            if (isElementRemoved && i > removedIndex){
+                newArray[i - 1] = original[i];
+            }
+            newArray[i] = original[i];
+        }
+
+        return newArray;
+    }
+
     private void ensureCapacity(int requiredCapacity) {
         if (requiredCapacity > array.length) {
             int newCapacity = array.length * 2;
-            array = Arrays.copyOf(array, newCapacity);
+            array = copyArray(array, newCapacity, false, 0);
+        }
+    }
+
+    private void reduceCapacity(int requiredCapacity) {
+        if (requiredCapacity < array.length / 2) {
+            int newCapacity = array.length / 2;
+            array = copyArray(array, newCapacity, false, 0);
         }
     }
 
@@ -79,11 +110,6 @@ public class DynamicArray<E> {
         return size == 0;
     }
 
-    public void clear() {
-        Arrays.fill(array, 0, size, null);
-        size = 0;
-    }
-
     public void printArray() {
         System.out.print("[");
         for (int i = 0; i < size; i++) {
@@ -93,5 +119,26 @@ public class DynamicArray<E> {
             }
         }
         System.out.println("]");
+    }
+
+    public static void main(String[] args) {
+        DynamicArray<Integer> dynamicArray = new DynamicArray<>();
+        dynamicArray.add(1);
+        System.out.println(dynamicArray.contains(1));
+        dynamicArray.add(2);
+        dynamicArray.add(3);
+        dynamicArray.remove(1);
+        dynamicArray.printArray();
+
+        for (int i = 0; i < 50; i++) {
+            dynamicArray.add(i);
+        }
+        dynamicArray.printArray();
+        for (int i = 0; i < 25; i++) {
+            dynamicArray.remove(i);
+        }
+        dynamicArray.printArray();
+        dynamicArray.remove(5);
+        dynamicArray.printArray();
     }
 }
