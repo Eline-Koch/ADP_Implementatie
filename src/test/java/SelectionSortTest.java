@@ -9,6 +9,28 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
+//performance tests
+//average
+//size: 1000, time: 0.012901400 seconden
+//size: 10000, time: 0.182184300 seconden
+//size: 100000, time: 18.795509700 seconden
+//
+//best case
+//size: 1000, time: 0.001712400 seconden
+//size: 10000, time: 0.163788800 seconden
+//size: 100000, time: 16.941172100 seconden
+//
+//worst case
+//size: 1000, time: 0.001930300 seconden
+//size: 10000, time: 0.185386000 seconden
+//size: 100000, time: 17.019835200 seconden
+//
+// Het verschil tussen best case en worst case scenario is heel klein, omdat je elke keer de (steeds iets kleiner wordende)
+// loop afmaakt, omdat je niet zeker weet wanneer je het minimum gevonden hebt. Dit zou je tussentijds op kunnen slaan,
+// maar dan wordt het ook een beetje een andere algoritme.
+//
+// Waarom de tijd bij average met size 1000 zoveel langer duurt dan de andere met size 1000 is onduidelijk,
+// maar over het algemeen zorgt een 10x grotere n voor een 100x langere tijd, dus (O)N^2.
 public class SelectionSortTest {
     PerformanceBenchmark benchmark = new PerformanceBenchmark();
     Random random = new Random();
@@ -110,20 +132,66 @@ public class SelectionSortTest {
 
         int[] arraySizes = {1000, 10000, 100000};
 
+        System.out.println("average");
+
         for (int size : arraySizes) {
-            this.performSortPerformanceTest(size);
+            this.performAveragePerformanceTest(size);
+        }
+
+        System.out.println();
+        System.out.println("best case");
+
+        for (int size : arraySizes) {
+            this.performBestCasePerformanceTest(size);
+        }
+
+        System.out.println();
+        System.out.println("worst case");
+
+        for (int size : arraySizes) {
+            this.performWorstCasePerformanceTest(size);
         }
     }
 
-    public void performSortPerformanceTest(int arraySize) {
+    public void performAveragePerformanceTest(int arraySize) {
         SelectionSort<Integer> selectionSort = new SelectionSort<>();
-        Integer[] randomNumbersArray = new Integer[arraySize];
-        for (int i = 0;i < randomNumbersArray.length;i++) {
-            randomNumbersArray[i] = random.nextInt();
+        Integer[] array = new Integer[arraySize];
+        for (int i = 0;i < arraySize;i++) {
+            array[i] = random.nextInt(arraySize);
         }
 
         benchmark.start();
-        selectionSort.sort(randomNumbersArray);
+        selectionSort.sort(array);
+        benchmark.stop();
+
+        System.out.print("size: " + arraySize + ", time: ");
+        benchmark.printElapsedTime();
+    }
+
+    public void performBestCasePerformanceTest(int arraySize) {
+        SelectionSort<Integer> selectionSort = new SelectionSort<>();
+        Integer[] array = new Integer[arraySize];
+        for (int i = 0;i < arraySize;i++) {
+            array[i] = i;
+        }
+
+        benchmark.start();
+        selectionSort.sort(array);
+        benchmark.stop();
+
+        System.out.print("size: " + arraySize + ", time: ");
+        benchmark.printElapsedTime();
+    }
+
+    public void performWorstCasePerformanceTest(int arraySize) {
+        SelectionSort<Integer> selectionSort = new SelectionSort<>();
+        Integer[] array = new Integer[arraySize];
+        for (int i = 0;i < arraySize;i++) {
+            array[i] = arraySize - 1 - i;
+        }
+
+        benchmark.start();
+        selectionSort.sort(array);
         benchmark.stop();
 
         System.out.print("size: " + arraySize + ", time: ");
