@@ -1,17 +1,17 @@
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.adp_implementatie.PerformanceBenchmark;
 import org.adp_implementatie.SelectionSort;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class SelectionSortTest {
+    PerformanceBenchmark benchmark = new PerformanceBenchmark();
+    Random random = new Random();
     public static void main(String[] args) throws IOException {
         SelectionSortTest test = new SelectionSortTest();
         test.performDataSetTest();
@@ -105,6 +105,28 @@ public class SelectionSortTest {
     }
 
     public void performPerformanceTest() {
+        System.out.println();
+        System.out.println("performance tests");
 
+        int[] arraySizes = {1000, 10000, 100000};
+
+        for (int size : arraySizes) {
+            this.performSortPerformanceTest(size);
+        }
+    }
+
+    public void performSortPerformanceTest(int arraySize) {
+        SelectionSort<Integer> selectionSort = new SelectionSort<>();
+        Integer[] randomNumbersArray = new Integer[arraySize];
+        for (int i = 0;i < randomNumbersArray.length;i++) {
+            randomNumbersArray[i] = random.nextInt();
+        }
+
+        benchmark.start();
+        selectionSort.sort(randomNumbersArray);
+        benchmark.stop();
+
+        System.out.print("size: " + arraySize + ", time: ");
+        benchmark.printElapsedTime();
     }
 }
