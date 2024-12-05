@@ -1,6 +1,5 @@
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.adp_implementatie.DynamicArray;
 import org.adp_implementatie.PerformanceBenchmark;
 import org.adp_implementatie.PriorityQueue;
 
@@ -34,7 +33,8 @@ public class PriorityQueueTest {
     public static void main(String[] args) throws IOException {
         PriorityQueueTest test = new PriorityQueueTest();
         test.performDataSetTest();
-        test.containsObjectTest();
+        test.orderComparableObjectTest();
+        test.orderStringTest();
         test.performPerformanceTest();
     }
 
@@ -70,19 +70,33 @@ public class PriorityQueueTest {
         }
     }
 
-    //contains method should compare the value of an Object, not the reference
-    public void containsObjectTest() {
+    public void orderComparableObjectTest() {
         System.out.println();
-        System.out.println("containsObject");
+        System.out.println("order comparable object test");
 
-        DynamicArray<Pizza> dynamicArray = new DynamicArray<>();
-        Pizza pizza1 = new Pizza("mozarella", true);
-        Pizza pizza2 = new Pizza("mozarella", true);
+        PriorityQueue<Pizza> priorityQueue = new PriorityQueue<>();
+        Pizza[] pizzas = {new Pizza ("mozarella", true),
+                new Pizza ("salami", false), new Pizza ("anchovis", false)};
+        for (Pizza pizza : pizzas) {
+            priorityQueue.add(pizza);
+        }
+        for (int i = 0;i < pizzas.length; i++){
+            priorityQueue.poll().print();
+        }
+    }
 
-        dynamicArray.add(pizza1);
+    public void orderStringTest() {
+        System.out.println();
+        System.out.println("order string test");
 
-        System.out.println("same reference, same value: " + dynamicArray.contains(pizza1));
-        System.out.println("different reference, same value: " + dynamicArray.contains(pizza2));
+        PriorityQueue<String> priorityQueue = new PriorityQueue<>();
+        String[] fruits = {"mango", "apple", "orange", "banana"};
+        for (String fruit : fruits) {
+            priorityQueue.add(fruit);
+        }
+        for (int i = 0;i < fruits.length; i++){
+            System.out.println(priorityQueue.poll());
+        }
     }
 
     public void performPerformanceTest() {
