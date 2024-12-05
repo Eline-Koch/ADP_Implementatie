@@ -11,4 +11,9 @@ public class Pizza implements Comparable<Pizza> {
     public int compareTo(Pizza other) {
         return CharSequence.compare(this.name, other.name);
     }
+
+    public void print() {
+        System.out.print("name: " + this.name + ", ");
+        System.out.println("isVeg: " + this.isVeg);
+    }
 }

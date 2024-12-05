@@ -4,6 +4,7 @@ public class SelectionSort <E extends Comparable<E>> {
     // Function to perform selection sort on an array
     public void sort(E[] arr) {
         int n = arr.length;
+
         // Iterate through the array
         for (int i = 0; i < n - 1; i++) {
             // Find the index of the minimum element in the unsorted portion of the array
