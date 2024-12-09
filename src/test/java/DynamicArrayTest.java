@@ -143,6 +143,17 @@ public class DynamicArrayTest {
         System.out.println();
         System.out.println("remove(index)");
 
+//        remove(index)
+//        numOperations: 10, size: 2000, nanoseconds: 2073200
+//        numOperations: 100, size: 2000, nanoseconds: 4239700
+//        numOperations: 1000, size: 2000, nanoseconds: 48927000
+//        numOperations: 10, size: 20000, nanoseconds: 1855300
+//        numOperations: 100, size: 20000, nanoseconds: 9861200
+//        numOperations: 1000, size: 20000, nanoseconds: 157144400
+//        numOperations: 10, size: 200000, nanoseconds: 47065700
+//        numOperations: 100, size: 200000, nanoseconds: 553288400
+//        numOperations: 1000, size: 200000, nanoseconds: 5782775800
+
         for (int size : arraySize) {
             for (int num : numOperations) {
                 this.performRemoveIndexPerformanceTest(size * 2, num / 100);
@@ -151,6 +162,17 @@ public class DynamicArrayTest {
 
         System.out.println();
         System.out.println("remove(element)");
+
+//        remove(element)
+//        numOperations: 10, size: 2000, nanoseconds: 8421600
+//        numOperations: 100, size: 2000, nanoseconds: 4726000
+//        numOperations: 1000, size: 2000, nanoseconds: 36546400
+//        numOperations: 10, size: 20000, nanoseconds: 1022100
+//        numOperations: 100, size: 20000, nanoseconds: 9883000
+//        numOperations: 1000, size: 20000, nanoseconds: 81532100
+//        numOperations: 10, size: 200000, nanoseconds: 77990900
+//        numOperations: 100, size: 200000, nanoseconds: 471840800
+//        numOperations: 1000, size: 200000, nanoseconds: 3271934800
 
         for (int size : arraySize) {
             for (int num : numOperations) {
@@ -161,6 +183,17 @@ public class DynamicArrayTest {
         System.out.println();
         System.out.println("contains");
 
+//        contains
+//        numOperations: 10, size: 1000, nanoseconds: 297600
+//        numOperations: 100, size: 1000, nanoseconds: 114500
+//        numOperations: 1000, size: 1000, nanoseconds: 991900
+//        numOperations: 10, size: 10000, nanoseconds: 74700
+//        numOperations: 100, size: 10000, nanoseconds: 567500
+//        numOperations: 1000, size: 10000, nanoseconds: 7023300
+//        numOperations: 10, size: 100000, nanoseconds: 1929600
+//        numOperations: 100, size: 100000, nanoseconds: 12131700
+//        numOperations: 1000, size: 100000, nanoseconds: 196792900
+
         for (int size : arraySize) {
             for (int num : numOperations) {
                 this.performContainsPerformanceTest(size, num / 100);
@@ -169,6 +202,17 @@ public class DynamicArrayTest {
 
         System.out.println();
         System.out.println("indexOf");
+
+//        indexOf
+//        numOperations: 10, size: 1000, nanoseconds: 925500
+//        numOperations: 100, size: 1000, nanoseconds: 180200
+//        numOperations: 1000, size: 1000, nanoseconds: 1848100
+//        numOperations: 10, size: 10000, nanoseconds: 269800
+//        numOperations: 100, size: 10000, nanoseconds: 1424000
+//        numOperations: 1000, size: 10000, nanoseconds: 9563300
+//        numOperations: 10, size: 100000, nanoseconds: 1489000
+//        numOperations: 100, size: 100000, nanoseconds: 8827600
+//        numOperations: 1000, size: 100000, nanoseconds: 81087400
 
         for (int size : arraySize) {
             for (int num : numOperations) {
