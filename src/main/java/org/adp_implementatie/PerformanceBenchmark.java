@@ -1,5 +1,7 @@
 package org.adp_implementatie;
 
+import java.text.DecimalFormat;
+
 public class PerformanceBenchmark {
     private long startTime;
     private long endTime;
@@ -20,6 +22,12 @@ public class PerformanceBenchmark {
 
     public double getElapsedTimeInSeconds() {
         return (endTime - startTime) / 1e9;
+    }
+
+    public String formatElapsedTime(double elapsedTime) {
+        // Gebruik DecimalFormat om exponentiële notatie te voorkomen
+        DecimalFormat df = new DecimalFormat("#.########");
+        return df.format(elapsedTime) + " seconden";
     }
 
     public long getOperations() {
