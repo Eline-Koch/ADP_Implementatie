@@ -1,9 +1,21 @@
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.adp_implementatie.BinarySearch;
 import org.adp_implementatie.PerformanceBenchmark;
+import org.adp_implementatie.SelectionSort;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class BinarySearchTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
         String[] strArray = {
                 "aardbei", "abrikoos", "adelaar", "afwas", "agenda", "akker", "alarm", "algen", "ambacht", "anker",
@@ -72,60 +84,14 @@ public class BinarySearchTest {
             largeArray[i] = i + 1;
         }
 
-        System.out.println("Integer array test:");
-        benchmark.start();
-        int result = BinarySearch.binarySearch(largeArray, target);
-        benchmark.stop();
-        System.out.println(benchmark.getElapsedTimeInSeconds() + " seconden om 'target' te vinden in een array met " + largeArray.length + " items");
+        performSearch("Integer", largeArray, target);
+        performSearch("String", strArray, "zeep");
+        performSearch("Pizza objects", pizzas, pizzas[pizzas.length-1]);
 
-        System.out.println("Resultaat: " + result);
-        System.out.println();
 
-        System.out.println("String array test:");
-        benchmark.start();
-        int resultString = BinarySearch.binarySearch(strArray, "zeep");
-        benchmark.stop();
-        System.out.println(benchmark.formatElapsedTime(benchmark.getElapsedTimeInSeconds()) + " seconden om 'zeep' te vinden in een array met " + strArray.length + " items");
-
-        System.out.println("Resultaat: " + resultString);
-        System.out.println();
-
-        System.out.println("Pizza array test:");
-        benchmark.start();
-        int resultPizza = BinarySearch.binarySearch(pizzas, pizzas[pizzas.length - 1]);
-        benchmark.stop();
-        System.out.println(benchmark.formatElapsedTime(benchmark.getElapsedTimeInSeconds()) + " seconden om 'vesuvio' te vinden in een array met " + pizzas.length + " items");
-
-        System.out.println("Resultaat: " + resultPizza);
-        System.out.println();
-
-        System.out.println("Integer array test Inefficient:");
-        benchmark.start();
-        int resultInefficient = inefficientSearchWithForLoop(largeArray, target);
-        benchmark.stop();
-        System.out.println(benchmark.getElapsedTimeInSeconds() + " seconden om 'target' te vinden in een array met " + largeArray.length + " items");
-
-        System.out.println("Resultaat: " + resultInefficient);
-        System.out.println();
-
-        System.out.println("String array test Inefficient:");
-        benchmark.start();
-        int resultInefficient2 = inefficientSearchWithForLoop(strArray, "zeep");
-        benchmark.stop();
-        System.out.println(benchmark.formatElapsedTime(benchmark.getElapsedTimeInSeconds()) + " seconden om 'zeep' te vinden in een array met " + strArray.length + " items");
-
-        System.out.println("Resultaat: " + resultInefficient2);
-        System.out.println();
-
-        System.out.println("Pizza array test Inefficient:");
-        benchmark.start();
-        int resultInefficient3 = inefficientSearchWithForLoop(pizzas, pizzas[pizzas.length - 1]);
-        benchmark.stop();
-        System.out.println(benchmark.formatElapsedTime(benchmark.getElapsedTimeInSeconds()) + " seconden om 'vesivio' te vinden in een array met " + pizzas.length + " items");
-
-        System.out.println("Resultaat: " + resultInefficient3);
-        System.out.println();
-
+        performSearchInefficient("Integer", largeArray, target);
+        performSearchInefficient("String", strArray, "zeep");
+        performSearchInefficient("Pizza objects", pizzas, pizzas[pizzas.length-1]);
     }
 
     public static <T extends Comparable<T>> int inefficientSearchWithForLoop(T[] array, T target) {
@@ -135,5 +101,31 @@ public class BinarySearchTest {
             }
         }
         return -1; // item niet gevonden
+    }
+
+    public static <T extends Comparable<T>> void performSearch(String inputData, T[] array, T target){
+        PerformanceBenchmark benchmark = new PerformanceBenchmark();
+
+        System.out.println(inputData + " array test:");
+        benchmark.start();
+        int result = BinarySearch.binarySearch(array, target);
+        benchmark.stop();
+        System.out.println(benchmark.formatElapsedTime(benchmark.getElapsedTimeInSeconds()) + " seconden om " + target + " te vinden in een array met " + array.length + " items");
+
+        System.out.println("Resultaat: " + result);
+        System.out.println();
+    }
+
+    public static <T extends Comparable<T>> void performSearchInefficient(String inputData, T[] array, T target){
+        PerformanceBenchmark benchmark = new PerformanceBenchmark();
+
+        System.out.println(inputData + " array test Inefficient:");
+        benchmark.start();
+        int resultInefficient = inefficientSearchWithForLoop(array, target);
+        benchmark.stop();
+        System.out.println(benchmark.formatElapsedTime(benchmark.getElapsedTimeInSeconds()) + " seconden om " + target + " te vinden in een array met " + array.length + " items");
+
+        System.out.println("Resultaat: " + resultInefficient);
+        System.out.println();
     }
 }
