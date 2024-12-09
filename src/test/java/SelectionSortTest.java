@@ -31,6 +31,12 @@ import java.util.*;
 //
 // Waarom de tijd bij average met size 1000 zoveel langer duurt dan de andere met size 1000 is onduidelijk,
 // maar over het algemeen zorgt een 10x grotere n voor een 100x langere tijd, dus (O)N^2.
+
+//         Insertion sort:                              vs    Selection sort           Winner?
+//         testcases with size of 1000
+//        performBestCaseTest();  //0,0001384 seconden   |  0.001712400 seconden   | Insertion = 12x faster
+//        performWorstCaseTest(); //0.0076667 seconden   |  0.001930300 seconden   | Selection = 4x faster
+//        performRandomCaseTest();//0,0037285 seconden   |  0.012901400 seconden   | Insertion = 3.5x faster
 public class SelectionSortTest {
     PerformanceBenchmark benchmark = new PerformanceBenchmark();
     Random random = new Random();
