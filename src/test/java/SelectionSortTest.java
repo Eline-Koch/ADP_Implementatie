@@ -187,7 +187,7 @@ public class SelectionSortTest {
         SelectionSort<Integer> selectionSort = new SelectionSort<>();
         Integer[] array = new Integer[arraySize];
         for (int i = 0;i < arraySize;i++) {
-            array[i] = arraySize - 1 - i;
+            array[i] = arraySize - i;
         }
 
         benchmark.start();

@@ -15,16 +15,17 @@ public class InsertionSortTest {
     public static void main(String[] args) throws IOException {
         sortComparableObjectTest();
         performDataSetTest();
-        performBestCaseTest();
-        performWorstCaseTest();
-        performRandomCaseTest();
+
+        // testcases with size of 1000
+        performBestCaseTest();  //0,0001384 seconden
+        performWorstCaseTest(); //0.0076667 seconden
+        performRandomCaseTest();//0,0037285 seconden
     }
 
     public static void sortComparableObjectTest() {
         System.out.println();
         System.out.println("sort comparable object test");
 
-        SelectionSort<Pizza> selectionSort = new SelectionSort<Pizza>();
         Pizza[] pizzas = {new Pizza ("mozarella", true),
                 new Pizza ("salami", false), new Pizza ("anchovis", false)};
 
