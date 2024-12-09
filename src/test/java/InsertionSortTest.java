@@ -13,26 +13,46 @@ import java.util.*;
 
 public class InsertionSortTest {
     public static void main(String[] args) throws IOException {
+        sortComparableObjectTest();
         performDataSetTest();
         performBestCaseTest();
         performWorstCaseTest();
         performRandomCaseTest();
     }
 
+    public static void sortComparableObjectTest() {
+        System.out.println();
+        System.out.println("sort comparable object test");
+
+        SelectionSort<Pizza> selectionSort = new SelectionSort<Pizza>();
+        Pizza[] pizzas = {new Pizza ("mozarella", true),
+                new Pizza ("salami", false), new Pizza ("anchovis", false)};
+
+        System.out.println("before:");
+        for (Pizza pizza : pizzas) {
+            pizza.print();
+        }
+
+        InsertionSort.insertionSort(pizzas);
+
+        System.out.println("after:");
+        for (Pizza pizza : pizzas) {
+            pizza.print();
+        }
+    }
+
     public static void performWorstCaseTest() {
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
         Integer[] largeArray = new Integer[1000];
 
-        int n = largeArray.length; // Stel de lengte van de array in
-
         // Vul de array achterstevoren
         for (int i = 0; i < largeArray.length; i++) {
-            largeArray[i] = n - i;
+            largeArray[i] = largeArray.length - i;
         }
 
         System.out.println("Integer array test met insertionsort (worst case: reversed array): ");
         benchmark.start();
-        Integer[] result = InsertionSort.insertionSort(largeArray);
+        InsertionSort.insertionSort(largeArray);
         benchmark.stop();
         System.out.println(benchmark.getElapsedTimeInSeconds() + " seconden om uit te voeren");
     }
@@ -41,12 +61,8 @@ public class InsertionSortTest {
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
         Integer[] largeArray = new Integer[1000];
 
-        int n = largeArray.length; // Stel de lengte van de array in
-
-        // Vul de array achterstevoren
         System.out.println("Integer array test met insertionsort (best case: sorted array): ");
 
-        // Vul de array achterstevoren
         for (int i = 0; i < largeArray.length; i++) {
             largeArray[i] = i;
         }
@@ -61,13 +77,10 @@ public class InsertionSortTest {
         PerformanceBenchmark benchmark = new PerformanceBenchmark();
         Integer[] largeArray = new Integer[1000];
 
-        int n = largeArray.length; // Stel de lengte van de array in
-
-        // Vul de array achterstevoren
         System.out.println("Integer array test met insertionsort (Random case: random ints array): ");
 
         Random random = new Random();
-        // Vul de array achterstevoren
+
         for (int i = 0; i < largeArray.length; i++) {
             largeArray[i] = random.nextInt(largeArray.length);
             ;
