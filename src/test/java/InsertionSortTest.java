@@ -13,10 +13,14 @@ import java.util.*;
 
 public class InsertionSortTest {
     public static void main(String[] args) throws IOException {
-        PerformanceBenchmark benchmark = new PerformanceBenchmark();
-
         performDataSetTest();
+        performBestCaseTest();
+        performWorstCaseTest();
+        performRandomCaseTest();
+    }
 
+    public static void performWorstCaseTest() {
+        PerformanceBenchmark benchmark = new PerformanceBenchmark();
         Integer[] largeArray = new Integer[1000];
 
         int n = largeArray.length; // Stel de lengte van de array in
@@ -31,9 +35,15 @@ public class InsertionSortTest {
         Integer[] result = InsertionSort.insertionSort(largeArray);
         benchmark.stop();
         System.out.println(benchmark.getElapsedTimeInSeconds() + " seconden om uit te voeren");
+    }
 
+    public static void performBestCaseTest() {
+        PerformanceBenchmark benchmark = new PerformanceBenchmark();
+        Integer[] largeArray = new Integer[1000];
 
+        int n = largeArray.length; // Stel de lengte van de array in
 
+        // Vul de array achterstevoren
         System.out.println("Integer array test met insertionsort (best case: sorted array): ");
 
         // Vul de array achterstevoren
@@ -44,14 +54,23 @@ public class InsertionSortTest {
         InsertionSort.insertionSort(largeArray);
         benchmark.stop();
         System.out.println(benchmark.formatElapsedTime(benchmark.getElapsedTimeInSeconds()) + " seconden om uit te voeren");
+    }
 
 
+    public static void performRandomCaseTest() {
+        PerformanceBenchmark benchmark = new PerformanceBenchmark();
+        Integer[] largeArray = new Integer[1000];
+
+        int n = largeArray.length; // Stel de lengte van de array in
+
+        // Vul de array achterstevoren
         System.out.println("Integer array test met insertionsort (Random case: random ints array): ");
 
         Random random = new Random();
         // Vul de array achterstevoren
         for (int i = 0; i < largeArray.length; i++) {
-            largeArray[i] = random.nextInt(largeArray.length);;
+            largeArray[i] = random.nextInt(largeArray.length);
+            ;
         }
         InsertionSort.printArray(largeArray);
         benchmark.start();
@@ -59,10 +78,8 @@ public class InsertionSortTest {
         benchmark.stop();
         System.out.println(benchmark.formatElapsedTime(benchmark.getElapsedTimeInSeconds()) + " seconden om uit te voeren");
         InsertionSort.printArray(largeArray);
-
-
-
     }
+
 
     public static void performDataSetTest() throws IOException {
         System.out.println();
@@ -70,7 +87,8 @@ public class InsertionSortTest {
 
         String dataString = Files.readString(Path.of("src/test/resources/dataset_sorteren.json"), Charset.defaultCharset());
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, List<Object>> dataMap = objectMapper.readValue(dataString, new TypeReference<>(){});
+        Map<String, List<Object>> dataMap = objectMapper.readValue(dataString, new TypeReference<>() {
+        });
 
         for (Map.Entry<String, List<Object>> entry : dataMap.entrySet()) {
             String key = entry.getKey();
@@ -89,8 +107,7 @@ public class InsertionSortTest {
                     } else {
                         System.out.println("Cannot add \"o\" to array, because \"o\" is of type" + o.getClass().getName());
                     }
-                }
-                else {
+                } else {
                     System.out.println("Cannot add \"o\" to array, because \"o\" is null");
                 }
             }
