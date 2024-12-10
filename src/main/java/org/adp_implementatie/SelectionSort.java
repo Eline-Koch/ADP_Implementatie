@@ -1,21 +1,16 @@
 package org.adp_implementatie;
 
 public class SelectionSort <E extends Comparable<E>> {
-    // Function to perform selection sort on an array
     public void sort(E[] arr) {
         int n = arr.length;
 
-        // Iterate through the array
         for (int i = 0; i < n - 1; i++) {
-            // Find the index of the minimum element in the unsorted portion of the array
             int minIndex = i;
-            // Search for the minimum element in the unsorted portion
             for (int j = i + 1; j < n; j++) {
                 if (arr[j].compareTo(arr[minIndex]) < 0) {
                     minIndex = j;
                 }
             }
-            // Swap the found minimum element with the first element of the unsorted portion
             E temp = arr[minIndex];
             arr[minIndex] = arr[i];
             arr[i] = temp;

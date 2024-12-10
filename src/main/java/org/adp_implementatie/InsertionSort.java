@@ -4,13 +4,10 @@ public class InsertionSort {
 
     public static <T extends Comparable<T>> T[] insertionSort(T[] array) {
         for (int i = 1; i < array.length; i++) {
-            // Element dat moet worden ingevoegd
             T toBeInserted = array[i];
             int j = i;
 
-            // Verplaats grotere elementen naar rechts
             while (j > 0 && toBeInserted.compareTo(array[j - 1]) < 0) {
-//                printArray(array);
                 array[j] = array[j - 1];
                 j--;
             }

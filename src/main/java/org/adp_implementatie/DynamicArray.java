@@ -71,13 +71,10 @@ public class DynamicArray<E extends Comparable<E>> {
             throw new NegativeArraySizeException("New length cannot be negative");
         }
 
-        // Nieuwe array maken
         E[] newArray = (E[]) new Comparable[newLength];
 
-        // Bereken de maximale index tot waar gekopieerd moet worden
         int lengthToCopy = (original.length < newLength) ? original.length : newLength;
 
-        // Kopieer elementen handmatig
         for (int i = 0; i < lengthToCopy; i++) {
             if (isElementRemoved && i > removedIndex){
                 newArray[i - 1] = original[i];
