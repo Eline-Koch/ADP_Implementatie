@@ -206,7 +206,7 @@ public class DynamicArrayTest {
         System.out.println();
         System.out.println("contains");
 
-//        contains Dynamix array
+//        contains Dynamic array
 //        numOperations: 10, size: 1000, nanoseconds: 297600
 //        numOperations: 100, size: 1000, nanoseconds: 114500
 //        numOperations: 1000, size: 1000, nanoseconds: 991900
