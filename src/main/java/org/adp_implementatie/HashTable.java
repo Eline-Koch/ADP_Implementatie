@@ -31,7 +31,7 @@ public class HashTable {
     }
 
     // Put method with quadratic probing
-    public void put(String key, double[] value) {
+    public void add(String key, double[] value) {
         if (key == null) throw new IllegalArgumentException("Key cannot be null");
 
         if ((double) size / table.length >= LOAD_FACTOR_THRESHOLD) {
@@ -150,7 +150,7 @@ public class HashTable {
 
         for (Entry entry : oldTable) {
             if (entry != null) {
-                put(entry.key, entry.value);
+                add(entry.key, entry.value);
             }
         }
     }
@@ -163,7 +163,7 @@ public class HashTable {
 
         for (Entry entry : oldTable) {
             if (entry != null) {
-                put(entry.key, entry.value);
+                add(entry.key, entry.value);
             }
         }
     }
@@ -206,10 +206,10 @@ public class HashTable {
     public static void main(String[] args) {
         //Quadratic probing example, size = 17
         HashTable hashTable = new HashTable();
-        hashTable.put("P", new double[]{1}); //ASCII: 80
-        hashTable.put("a", new double[]{2}); //ASCII: 97 (80 + 17) index + 1
-        hashTable.put("r", new double[]{3}); //ASCII: 114 (97 + 17) index + 4
-        hashTable.put("ƒ", new double[]{4}); //ASCII: 131 (114 + 17) index + 16
+        hashTable.add("P", new double[]{1}); //ASCII: 80
+        hashTable.add("a", new double[]{2}); //ASCII: 97 (80 + 17) index + 1
+        hashTable.add("r", new double[]{3}); //ASCII: 114 (97 + 17) index + 4
+        hashTable.add("ƒ", new double[]{4}); //ASCII: 131 (114 + 17) index + 16
         hashTable.printTable();
     }
 }
