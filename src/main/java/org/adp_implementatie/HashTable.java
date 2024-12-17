@@ -5,7 +5,8 @@ import java.util.Arrays;
 public class HashTable {
 
     private static final int INITIAL_CAPACITY = 17; // Prime number as initial capacity
-    private static final double LOAD_FACTOR_THRESHOLD = 0.5;
+    private static final double LOAD_FACTOR_THRESHOLD = 0.4;
+    private static final Entry DELETED = new Entry(null, null);
 
     private int size;
     private Entry[] table;
@@ -34,7 +35,8 @@ public class HashTable {
     public void add(String key, double[] value) {
         if (key == null) throw new IllegalArgumentException("Key cannot be null");
 
-        if ((double) size / table.length >= LOAD_FACTOR_THRESHOLD) {
+        if ((double) size / (double) table.length >= LOAD_FACTOR_THRESHOLD) {
+            System.out.println(true);
             resize();
         }
 
@@ -42,7 +44,7 @@ public class HashTable {
         int i = 0;
 
         // Quadratic probing to find a slot
-        while (table[(index + i * i) % table.length] != null) {
+        while (table[(index + i * i) % table.length] != null && table[(index + i * i) % table.length] != DELETED) {
             int probeIndex = (index + i * i) % table.length;
             if (table[probeIndex].key.equals(key)) {
                 table[probeIndex].value = value; // Update the value if key exists
@@ -64,7 +66,7 @@ public class HashTable {
         int i = 0;
 
         // Quadratic probing to find the key
-        while (table[(index + i * i) % table.length] != null) {
+        while (table[(index + i * i) % table.length] != null && table[(index + i * i) % table.length] != DELETED) {
             int probeIndex = (index + i * i) % table.length;
             if (table[probeIndex].key.equals(key)) {
                 return table[probeIndex].value;
@@ -82,7 +84,7 @@ public class HashTable {
         int i = 0;
 
         // Quadratic probing to find the key
-        while (table[(index + i * i) % table.length] != null) {
+        while (table[(index + i * i) % table.length] != null && table[(index + i * i) % table.length] != DELETED) {
             int probeIndex = (index + i * i) % table.length;
             if (table[probeIndex].key.equals(key)) {
                 table[probeIndex].value = value;
@@ -101,12 +103,11 @@ public class HashTable {
         int i = 0;
 
         // Quadratic probing to find the key
-        while (table[(index + i * i) % table.length] != null) {
+        while (table[(index + i * i) % table.length] != null && table[(index + i * i) % table.length] != DELETED) {
             int probeIndex = (index + i * i) % table.length;
             if (table[probeIndex].key.equals(key)) {
-                table[probeIndex] = null;
+                table[probeIndex] = DELETED;
                 size--;
-                rehash(); // Rehash to fill any gaps caused by deletion
                 return;
             }
             i++;
@@ -116,9 +117,8 @@ public class HashTable {
     public void remove(double[] value) {
         for (int i = 0; i < table.length; ) {
             if (table[i].value == value) {
-                table[i] = null;
+                table[i] = DELETED;
                 size--;
-                rehash(); // Rehash to fill any gaps caused by deletion
                 return;
             }
         }
@@ -146,19 +146,6 @@ public class HashTable {
     private void resize() {
         Entry[] oldTable = table;
         table = new Entry[nextPrime(oldTable.length * 2)];
-        size = 0;
-
-        for (Entry entry : oldTable) {
-            if (entry != null) {
-                add(entry.key, entry.value);
-            }
-        }
-    }
-
-    // Rehash the table to handle deletions and clustering
-    private void rehash() {
-        Entry[] oldTable = table;
-        table = new Entry[oldTable.length];
         size = 0;
 
         for (Entry entry : oldTable) {
@@ -209,7 +196,15 @@ public class HashTable {
         hashTable.add("P", new double[]{1}); //ASCII: 80
         hashTable.add("a", new double[]{2}); //ASCII: 97 (80 + 17) index + 1
         hashTable.add("r", new double[]{3}); //ASCII: 114 (97 + 17) index + 4
+        hashTable.remove("r");
         hashTable.add("ƒ", new double[]{4}); //ASCII: 131 (114 + 17) index + 16
+        hashTable.printTable();
+
+        hashTable.add("b", new double[]{5});
+        hashTable.add("c", new double[]{6});
+        hashTable.add("d", new double[]{7});
+        hashTable.add("e", new double[]{8});
+        hashTable.add("f", new double[]{9});
         hashTable.printTable();
     }
 }
