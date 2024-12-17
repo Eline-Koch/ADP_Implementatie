@@ -17,9 +17,9 @@ public class HashTable {
 
     private static class Entry {
         String key;
-        int[] value;
+        double[] value;
 
-        Entry(String key, int[] value) {
+        Entry(String key, double[] value) {
             this.key = key;
             this.value = value;
         }
@@ -31,7 +31,7 @@ public class HashTable {
     }
 
     // Put method with quadratic probing
-    public void put(String key, int[] value) {
+    public void put(String key, double[] value) {
         if (key == null) throw new IllegalArgumentException("Key cannot be null");
 
         if ((double) size / table.length >= LOAD_FACTOR_THRESHOLD) {
@@ -57,7 +57,7 @@ public class HashTable {
     }
 
     // Get method with quadratic probing
-    public int[] get(String key) {
+    public double[] get(String key) {
         if (key == null) throw new IllegalArgumentException("Key cannot be null");
 
         int index = hash(key);
@@ -68,6 +68,24 @@ public class HashTable {
             int probeIndex = (index + i * i) % table.length;
             if (table[probeIndex].key.equals(key)) {
                 return table[probeIndex].value;
+            }
+            i++;
+        }
+
+        return null; // Key not found
+    }
+
+    public double[] set(String key, double[] value) {
+        if (key == null) throw new IllegalArgumentException("Key cannot be null");
+
+        int index = hash(key);
+        int i = 0;
+
+        // Quadratic probing to find the key
+        while (table[(index + i * i) % table.length] != null) {
+            int probeIndex = (index + i * i) % table.length;
+            if (table[probeIndex].key.equals(key)) {
+                table[probeIndex].value = value;
             }
             i++;
         }
@@ -93,6 +111,35 @@ public class HashTable {
             }
             i++;
         }
+    }
+
+    public void remove(double[] value) {
+        for (int i = 0; i < table.length; ) {
+            if (table[i].value == value) {
+                table[i] = null;
+                size--;
+                rehash(); // Rehash to fill any gaps caused by deletion
+                return;
+            }
+        }
+    }
+
+    public boolean contains(double[] value) {
+        for (int i = 0; i < table.length; ) {
+            if (table[i].value == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String keyOf(double[] value) {
+        for (int i = 0; i < table.length; ) {
+            if (table[i].value == value) {
+                return table[i].key;
+            }
+        }
+        return null;
     }
 
     // Resize the table when the load factor exceeds the threshold
@@ -159,10 +206,10 @@ public class HashTable {
     public static void main(String[] args) {
         //Quadratic probing example, size = 17
         HashTable hashTable = new HashTable();
-        hashTable.put("P", new int[]{1}); //ASCII: 80
-        hashTable.put("a", new int[]{2}); //ASCII: 97 (80 + 17) index + 1
-        hashTable.put("r", new int[]{3}); //ASCII: 114 (97 + 17) index + 4
-        hashTable.put("ƒ", new int[]{4}); //ASCII: 131 (114 + 17) index + 16
+        hashTable.put("P", new double[]{1}); //ASCII: 80
+        hashTable.put("a", new double[]{2}); //ASCII: 97 (80 + 17) index + 1
+        hashTable.put("r", new double[]{3}); //ASCII: 114 (97 + 17) index + 4
+        hashTable.put("ƒ", new double[]{4}); //ASCII: 131 (114 + 17) index + 16
         hashTable.printTable();
     }
 }
