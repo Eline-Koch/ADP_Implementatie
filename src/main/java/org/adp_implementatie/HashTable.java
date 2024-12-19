@@ -1,12 +1,10 @@
 package org.adp_implementatie;
 
-import java.util.Arrays;
-
 public class HashTable {
 
     private static final int INITIAL_CAPACITY = 17; // Prime number as initial capacity
     private static final double LOAD_FACTOR_THRESHOLD = 0.4;
-    private static final Entry DELETED = new Entry(null, null);
+    private static final Entry DELETED = new Entry(null, 0.0);
 
     private int size;
     private Entry[] table;
@@ -18,9 +16,9 @@ public class HashTable {
 
     private static class Entry {
         String key;
-        double[] value;
+        double value;
 
-        Entry(String key, double[] value) {
+        Entry(String key, Double value) {
             this.key = key;
             this.value = value;
         }
@@ -32,12 +30,11 @@ public class HashTable {
     }
 
     // Put method with quadratic probing
-    public void add(String key, double[] value) {
+    public void add(String key, Double value) {
         if (key == null) throw new IllegalArgumentException("Key cannot be null");
 
         if ((double) size / (double) table.length >= LOAD_FACTOR_THRESHOLD) {
-            System.out.println(true);
-            resize();
+            upsize();
         }
 
         int index = hash(key);
@@ -59,7 +56,7 @@ public class HashTable {
     }
 
     // Get method with quadratic probing
-    public double[] get(String key) {
+    public Double get(String key) {
         if (key == null) throw new IllegalArgumentException("Key cannot be null");
 
         int index = hash(key);
@@ -77,7 +74,7 @@ public class HashTable {
         return null; // Key not found
     }
 
-    public double[] set(String key, double[] value) {
+    public Double[] set(String key, Double value) {
         if (key == null) throw new IllegalArgumentException("Key cannot be null");
 
         int index = hash(key);
@@ -99,6 +96,10 @@ public class HashTable {
     public void remove(String key) {
         if (key == null) throw new IllegalArgumentException("Key cannot be null");
 
+        if ((double) size / (double) table.length < LOAD_FACTOR_THRESHOLD * 0.33) {
+            downsize();
+        }
+
         int index = hash(key);
         int i = 0;
 
@@ -114,7 +115,11 @@ public class HashTable {
         }
     }
 
-    public void remove(double[] value) {
+    public void remove(Double value) {
+        if ((double) size / (double) table.length < LOAD_FACTOR_THRESHOLD * 0.33) {
+            downsize();
+        }
+
         for (int i = 0; i < table.length; ) {
             if (table[i].value == value) {
                 table[i] = DELETED;
@@ -124,7 +129,7 @@ public class HashTable {
         }
     }
 
-    public boolean contains(double[] value) {
+    public boolean contains(Double value) {
         for (int i = 0; i < table.length; ) {
             if (table[i].value == value) {
                 return true;
@@ -133,7 +138,7 @@ public class HashTable {
         return false;
     }
 
-    public String keyOf(double[] value) {
+    public String keyOf(Double value) {
         for (int i = 0; i < table.length; ) {
             if (table[i].value == value) {
                 return table[i].key;
@@ -143,13 +148,25 @@ public class HashTable {
     }
 
     // Resize the table when the load factor exceeds the threshold
-    private void resize() {
+    private void upsize() {
         Entry[] oldTable = table;
         table = new Entry[nextPrime(oldTable.length * 2)];
         size = 0;
 
         for (Entry entry : oldTable) {
-            if (entry != null) {
+            if (entry != null && entry != DELETED) {
+                add(entry.key, entry.value);
+            }
+        }
+    }
+
+    private void downsize() {
+        Entry[] oldTable = table;
+        table = new Entry[nextPrime(oldTable.length / 2)];
+        size = 0;
+
+        for (Entry entry : oldTable) {
+            if (entry != null && entry != DELETED) {
                 add(entry.key, entry.value);
             }
         }
@@ -176,15 +193,20 @@ public class HashTable {
         return true;
     }
 
+    public int size() {
+        return size;
+    }
+
     // Utility method to print the current state of the hash map
     public void printTable() {
+        System.out.println();
         System.out.println("HashMap contents:");
         for (int i = 0; i < table.length; i++) {
             if (table[i] != null) {
-                System.out.println("Index " + i + ": Key = " + table[i].key + ", " +
-                        "Value = " + Arrays.toString(table[i].value));
+                System.out.print("Index " + i + ": Key = " + table[i].key + ", " +
+                        "Value = " + table[i].value + "; ");
             } else {
-                System.out.println("Index " + i + ": null");
+                System.out.print("Index " + i + ": null; ");
             }
         }
     }
@@ -193,18 +215,28 @@ public class HashTable {
     public static void main(String[] args) {
         //Quadratic probing example, size = 17
         HashTable hashTable = new HashTable();
-        hashTable.add("P", new double[]{1}); //ASCII: 80
-        hashTable.add("a", new double[]{2}); //ASCII: 97 (80 + 17) index + 1
-        hashTable.add("r", new double[]{3}); //ASCII: 114 (97 + 17) index + 4
+        hashTable.add("P", 1.0); //ASCII: 80
+        hashTable.add("a", 2.0); //ASCII: 97 (80 + 17) index + 1
+        hashTable.add("r", 3.0); //ASCII: 114 (97 + 17) index + 4
         hashTable.remove("r");
-        hashTable.add("ƒ", new double[]{4}); //ASCII: 131 (114 + 17) index + 16
+        hashTable.add("ƒ", 4.0); //ASCII: 131 (114 + 17) index + 16
         hashTable.printTable();
+        System.out.println();
 
-        hashTable.add("b", new double[]{5});
-        hashTable.add("c", new double[]{6});
-        hashTable.add("d", new double[]{7});
-        hashTable.add("e", new double[]{8});
-        hashTable.add("f", new double[]{9});
+        hashTable.add("b", 5.0);
+        hashTable.add("c", 6.0);
+        hashTable.add("d", 7.0);
+        hashTable.add("e", 8.0);
+        hashTable.add("f", 9.0);
         hashTable.printTable();
+        System.out.println();
+
+        hashTable.remove("b");
+        hashTable.remove("c");
+        hashTable.remove("d");
+        hashTable.remove("e");
+        hashTable.remove("f");
+        hashTable.printTable();
+        System.out.println();
     }
 }
