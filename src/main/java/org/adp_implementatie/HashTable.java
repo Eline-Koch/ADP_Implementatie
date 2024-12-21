@@ -108,6 +108,7 @@ public class HashTable {
             int probeIndex = (index + i * i) % table.length;
             if (table[probeIndex].key.equals(key)) {
                 table[probeIndex].value = value;
+                return value;
             }
             i++;
         }
@@ -167,7 +168,6 @@ public class HashTable {
 
     // Utility method to print the current state of the hash map
     public void printTable() {
-        System.out.println();
         System.out.println("HashMap contents:");
         for (int i = 0; i < table.length; i++) {
             if (table[i] != null) {

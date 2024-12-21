@@ -14,7 +14,7 @@ public class HashTableTest {
         HashTableTest test = new HashTableTest();
         test.performDataSetTest();
         test.performSpecialCasePerformanceTest();
-        test.performMethodsPerformanceTest();
+        test.performMethodPerformanceTest();
     }
 
    @SuppressWarnings("unchecked")
@@ -43,16 +43,26 @@ public class HashTableTest {
     }
 
     public void performSpecialCasePerformanceTest() {
+        System.out.println();
+        System.out.println("special case performance tests");
+        System.out.println("worst case");
 
+        HashTable hashTable = new HashTable();
+        for (int i = 0;i < 10; i++) {
+            hashTable.insert("a" + i, 1);
+        }
+
+
+        hashTable.printTable();
     }
 
-    public void performMethodsPerformanceTest() {
+    public void performMethodPerformanceTest() {
         System.out.println();
-        System.out.println("performance tests");
+        System.out.println("perform methods tests");
         System.out.println("insert");
 
         int[] numEntries = {1000, 10000, 100000};
-        int numOperations = 100000;
+        int numOperations = 1000;
 
         for (int size : numEntries) {
                 this.performInsertPerformanceTest(size, numOperations);
@@ -69,7 +79,7 @@ public class HashTableTest {
         System.out.println("delete");
 
         for (int size : numEntries) {
-                this.performDeletePerformanceTest(size * 2, numOperations / 100);
+                this.performDeletePerformanceTest(size, numOperations);
         }
 
         System.out.println();
@@ -84,12 +94,12 @@ public class HashTableTest {
         HashTable hashTable = new HashTable();
 
         for(int i = 0; i < numEntries; i++){
-            hashTable.insert("i", i);
+            hashTable.insert(String.valueOf(i), i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            hashTable.insert("i", i);
+            hashTable.insert(String.valueOf(i), i);
         }
 
         System.out.print("numOperations: " + numOperations + ", size: " + numEntries + ", nanoseconds: ");
@@ -100,7 +110,7 @@ public class HashTableTest {
         HashTable hashTable = new HashTable();
 
         for(int i = 0; i < numEntries; i++){
-            hashTable.insert("i", i);
+            hashTable.insert(String.valueOf(i), i);
         }
 
         long startingTime = System.nanoTime();
@@ -116,12 +126,12 @@ public class HashTableTest {
         HashTable hashTable = new HashTable();
 
         for(int i = 0; i < numEntries; i++){
-            hashTable.insert("i", i);
+            hashTable.insert(String.valueOf(i), i);
         }
 
         long startingTime = System.nanoTime();
         for(int i = 0; i < numOperations; i++){
-            hashTable.delete(String.valueOf(hashTable.size() / 2));
+            hashTable.delete(String.valueOf(i));
         }
 
         System.out.print("numOperations: " + numOperations + ", size: " + numEntries + ", nanoseconds: ");
@@ -132,7 +142,7 @@ public class HashTableTest {
         HashTable hashTable = new HashTable();
 
         for(int i = 0; i < numEntries; i++){
-            hashTable.insert("i", i);
+            hashTable.insert(String.valueOf(i), i);
         }
 
         long startingTime = System.nanoTime();
