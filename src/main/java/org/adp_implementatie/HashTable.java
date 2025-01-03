@@ -1,5 +1,7 @@
 package org.adp_implementatie;
 
+import java.nio.charset.Charset;
+
 public class HashTable {
 
     private static final int INITIAL_CAPACITY = 17; // Prime number as initial capacity
@@ -26,7 +28,13 @@ public class HashTable {
 
     // Hash function
     private int hash(String key) {
-        return key.toCharArray()[0];
+        int product = 1;
+        for (int i = 0; i < key.length(); i++) {
+            if (i != 0) {
+                product *= (int) key.charAt(i);
+            }
+        }
+        return product;
     }
 
     // Put method with quadratic probing
@@ -187,15 +195,15 @@ public class HashTable {
         hashTable.insert("a", 2); //ASCII: 97 (80 + 17) index + 1
         hashTable.insert("r", 3); //ASCII: 114 (97 + 17) index + 4
         hashTable.delete("r");
-        hashTable.insert("ƒ", 4); //ASCII: 131 (114 + 17) index + 16
         hashTable.printTable();
         System.out.println();
 
-        hashTable.insert("b", 5);
-        hashTable.insert("c", 6);
-        hashTable.insert("d", 7);
-        hashTable.insert("e", 8);
-        hashTable.insert("f", 9);
+        hashTable.insert("b", 4);
+        hashTable.insert("c", 5);
+        hashTable.insert("d", 6);
+        hashTable.insert("e", 7);
+        hashTable.insert("f", 8);
+        hashTable.insert("g", 9);
         hashTable.printTable();
         System.out.println();
 
