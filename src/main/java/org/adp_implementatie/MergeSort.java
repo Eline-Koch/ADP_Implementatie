@@ -56,6 +56,7 @@ public class MergeSort<E extends Comparable<E>> {
     public static void main(String[] args) {
         MergeSort<Integer> mergeSort = new MergeSort<>();
         Integer[] testArray = {7, 6, 3, 9, 2, 5, 1, 4, 8};
+        System.out.println(Arrays.toString(testArray));
         mergeSort.mergeSort(testArray);
         System.out.println(Arrays.toString(testArray));
     }
