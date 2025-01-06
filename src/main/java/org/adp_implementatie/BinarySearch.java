@@ -11,7 +11,6 @@ public class BinarySearch {
         int mid = left + (right - left) / 2;
 
         if (array[mid].compareTo(target) == 0) {
-            System.out.println(target + " = Gevonden op index: " + mid);
             return mid;
         } else if (array[mid].compareTo(target) < 0) {
             return binarySearch(array, target, mid + 1, right);
