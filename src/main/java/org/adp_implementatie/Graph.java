@@ -1,16 +1,16 @@
 package org.adp_implementatie;
 
+import java.util.Arrays;
+
 class Graph {
     private final int vertices; // Number of vertices
     private Edge[] adjacencyList; // Array of adjacency lists for the graph
 
-    // Constructor to initialize the graph
     public Graph(int vertices) {
         this.vertices = vertices;
         adjacencyList = new Edge[vertices];
     }
 
-    // Inner class to represent an adjacency list node
     static class Edge {
         int vertex;
         int weight;
@@ -24,16 +24,18 @@ class Graph {
     }
 
     // Method to add a weighted edge to the graph
-    public void addEdge(int source, int destination, int weight) {
+    public void addEdge(int source, int destination, int weight, boolean bidirectional) {
         // Add edge from source to destination
         Edge newEdge = new Edge(destination, weight);
         newEdge.next = adjacencyList[source];
         adjacencyList[source] = newEdge;
 
         // Add edge from destination to source (for undirected graph)
-        newEdge = new Edge(source, weight);
-        newEdge.next = adjacencyList[destination];
-        adjacencyList[destination] = newEdge;
+        if (bidirectional) {
+            newEdge = new Edge(source, weight);
+            newEdge.next = adjacencyList[destination];
+            adjacencyList[destination] = newEdge;
+        }
     }
 
     // Method to display the graph
@@ -49,73 +51,52 @@ class Graph {
             System.out.println();
         }
     }
-
-    // Depth-First Search (DFS)
-    public void dfs(int startEdge) {
-        boolean[] visited = new boolean[vertices];
-        System.out.println("DFS Traversal:");
-        dfsHelper(startEdge, visited);
-        System.out.println();
-    }
-
-    private void dfsHelper(int edge, boolean[] visited) {
-        if (visited[edge]) return;
-
-        visited[edge] = true;
-        System.out.print(edge + " ");
-
-        Edge current = adjacencyList[edge];
-        while (current != null) {
-            dfsHelper(current.vertex, visited);
-            current = current.next;
+    public void calculateShortestPaths(int start) {
+        int[] distances = new int[vertices * 2];
+        for(int i = 0; i < vertices; i++) {
+            distances[i] = Integer.MAX_VALUE;
         }
+        distances[start] = 0;
+
+        distances = calculateDirectPaths(start, distances);
+
+        System.out.println("Distances: " + Arrays.toString(Arrays.copyOfRange(distances, 0, vertices)));
+        System.out.println("Previous vertices: " + Arrays.toString(Arrays.copyOfRange(distances, vertices, vertices * 2)));
     }
 
-    // Breadth-First Search (BFS)
-    public void bfs(int startEdge) {
-        boolean[] visited = new boolean[vertices];
-        int[] queue = new int[vertices]; // Simple array for queue implementation
-        int front = 0, rear = 0;
+    public int[] calculateDirectPaths(int start, int[] distances) {
+        Edge currentEdge = adjacencyList[start];
+        while (!(currentEdge == null)) {
 
-        visited[startEdge] = true;
-        queue[rear++] = startEdge;
-
-        System.out.println("BFS Traversal:");
-        while (front < rear) {
-            int currentEdge = queue[front++];
-            System.out.print(currentEdge + " ");
-
-            Edge current = adjacencyList[currentEdge];
-            while (current != null) {
-                if (!visited[current.vertex]) {
-                    visited[current.vertex] = true;
-                    queue[rear++] = current.vertex;
-                }
-                current = current.next;
+            if (currentEdge.weight + distances[start] < distances[currentEdge.vertex]) {
+                distances[currentEdge.vertex + vertices] = start;
+                distances[currentEdge.vertex] = currentEdge.weight + distances[start];
+                distances = calculateDirectPaths(currentEdge.vertex, distances);
             }
+            currentEdge = currentEdge.next;
         }
-        System.out.println();
+        return distances;
     }
 
-    // Main method to test the implementation
     public static void main(String[] args) {
         Graph graph = new Graph(6);
+        graph.addEdge(0, 1, 4, true);
+        graph.addEdge(0, 2, 3 ,true);
+        graph.addEdge(3, 1, 2, true);
+        graph.addEdge(2, 3, 5, true);
+        graph.addEdge(3, 4, 1, true);
+        graph.addEdge(4, 5, 6, true);
 
-        // Add edges with weights
-        graph.addEdge(0, 1, 4);
-        graph.addEdge(0, 2, 3);
-        graph.addEdge(1, 3, 2);
-        graph.addEdge(2, 3, 5);
-        graph.addEdge(3, 4, 1);
-        graph.addEdge(4, 5, 6);
+        graph.calculateShortestPaths(0);
 
-        // Print the graph
-        graph.printGraph();
+        Graph unweightedGraph = new Graph(6);
+        unweightedGraph.addEdge(0, 1, 1, true);
+        unweightedGraph.addEdge(0, 2, 1 ,true);
+        unweightedGraph.addEdge(3, 1, 1, true);
+        unweightedGraph.addEdge(2, 3, 1, true);
+        unweightedGraph.addEdge(3, 4, 1, true);
+        unweightedGraph.addEdge(4, 5, 1, true);
 
-        // Perform DFS
-        graph.dfs(0);
-
-        // Perform BFS
-        graph.bfs(0);
+        unweightedGraph.calculateShortestPaths(0);
     }
 }
