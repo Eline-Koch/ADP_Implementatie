@@ -1,77 +1,93 @@
 package org.adp_implementatie;
-public class QuickSort {
-    public static void quickSort(int[] array, int low, int high) {
-        if (low < high) {
-            // Zoek de index van het pivot-element met de median of three methode
-            int pivotIndex = partition(array, low, high);
+public class QuickSort<E extends Comparable<E>> {
 
-            // Roep quicksort recursief aan op het linker en rechter deel
+    // Publieke methode om quicksort te starten
+    public void sort(E[] array) {
+        quickSort(array, 0, array.length - 1);
+    }
+
+    // Recursieve quicksort-methode
+    private void quickSort(E[] array, int low, int high) {
+        if (low < high) {
+            int pivotIndex = partition(array, low, high);
             quickSort(array, low, pivotIndex - 1);
             quickSort(array, pivotIndex + 1, high);
         }
     }
 
-    // Partitioneer de array rond een pivot-element
-    private static int partition(int[] array, int low, int high) {
-        // Kies de pivot met median of three
-        int pivot = medianOfThree(array, low, high);
-
-        int i = low - 1; // Index van het kleinere element
+    // Partitioneer de array rond de pivot
+    private int partition(E[] array, int low, int high) {
+        // Kies de pivot met de median of three methode
+        E pivot = medianOfThree(array, low, high);
+        int i = low - 1;
 
         for (int j = low; j < high; j++) {
-            // Als het huidige element kleiner is dan of gelijk aan de pivot
-            if (array[j] <= pivot) {
+            if (array[j].compareTo(pivot) <= 0) {
                 i++;
-                // Wissel array[i] en array[j]
                 swap(array, i, j);
             }
         }
 
-        // Wissel de pivot naar de juiste positie
+        // Zet de pivot op de juiste positie
         swap(array, i + 1, high);
-
-        return i + 1; // Retourneer de index van de pivot
+        return i + 1;
     }
 
-    private static int medianOfThree(int[] array, int low, int high) {
+    // Median of Three methode
+    private E medianOfThree(E[] array, int low, int high) {
         int mid = low + (high - low) / 2;
 
-        // Sorteer low, mid en high
-        if (array[low] > array[mid]) swap(array, low, mid);
-        if (array[low] > array[high]) swap(array, low, high);
-        if (array[mid] > array[high]) swap(array, mid, high);
+        // Sorteer de waarden van low, mid en high
+        if (array[low].compareTo(array[mid]) > 0) {
+            swap(array, low, mid);
+        }
+        if (array[low].compareTo(array[high]) > 0) {
+            swap(array, low, high);
+        }
+        if (array[mid].compareTo(array[high]) > 0) {
+            swap(array, mid, high);
+        }
 
-        // Plaats de mediaan op de laatste positie als pivot
+        // Zet de mediaan (mid) op de high-positie
         swap(array, mid, high);
         return array[high];
     }
 
-    private static void swap(int[] array, int i, int j) {
-        int temp = array[i];
+    // Hulpmethode om twee elementen in de array te wisselen
+    private void swap(E[] array, int i, int j) {
+        E temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
 
+    // Test de implementatie
     public static void main(String[] args) {
-        int[] array = {10, 7, 8, 9, 1, 5, 3, 2};
+        QuickSort<Integer> quickSort = new QuickSort<>();
+        QuickSort<String> quickSort2 = new QuickSort<>();
+        Integer[] array = {10, 7, 8, 9, 1, 5};
+        String[] array2 = {"b", "z", "sa", "a", "dd", "pizza"};
+
         System.out.println("Oorspronkelijke array:");
         printArray(array);
+        printArray(array2);
 
-        quickSort(array, 0, array.length - 1);
+        quickSort.sort(array);
+        quickSort2.sort(array2);
 
         System.out.println("Gesorteerde array:");
         printArray(array);
+        printArray(array2);
     }
 
-    private static void printArray(int[] array) {
-        for (int num : array) {
-            System.out.print(num + " ");
+    // Hulpmethode om een array af te drukken
+    private static <E> void printArray(E[] array) {
+        for (E element : array) {
+            System.out.print(element + " ");
         }
         System.out.println();
     }
 }
 
-// TODO: Algemeen maken met wildcard
-// TODO: Testdataset maken
+ // TODO: Testdataset maken
 // TODO: Testdataset lezen
 // TODO: Performance meten na opwarmrondes
