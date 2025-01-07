@@ -80,14 +80,10 @@ public class QuickSort<E extends Comparable<E>> {
     }
 
     // Hulpmethode om een array af te drukken
-    private static <E> void printArray(E[] array) {
+    public static <E> void printArray(E[] array) {
         for (E element : array) {
             System.out.print(element + " ");
         }
         System.out.println();
     }
 }
-
- // TODO: Testdataset maken
-// TODO: Testdataset lezen
-// TODO: Performance meten na opwarmrondes
