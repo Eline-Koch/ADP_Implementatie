@@ -3,12 +3,12 @@ package org.adp_implementatie;
 import java.util.Arrays;
 
 class Graph {
-    private final int vertices; // Number of vertices
+    private int vertices; // Number of vertices
     private Edge[] adjacencyList; // Array of adjacency lists for the graph
 
     public Graph(int vertices) {
         this.vertices = vertices;
-        adjacencyList = new Edge[vertices];
+        adjacencyList = new Edge[vertices * 2];
     }
 
     static class Edge {
@@ -23,6 +23,45 @@ class Graph {
         }
     }
 
+    public void addVertex(int index) {
+        if (index >= adjacencyList.length) {
+            adjacencyList = copyArray(adjacencyList, adjacencyList.length * 2);
+        }
+        if (index >= vertices) {
+            vertices = index + 1;
+        }
+    }
+
+    public void removeVertex(int index) {
+        adjacencyList[index] = null;
+        if (vertices == index + 1) {
+            for (int i = 0; i < adjacencyList.length; i++) {
+                if (adjacencyList[i] != null) {
+                    vertices = i + 1;
+                }
+            }
+        }
+    }
+
+    public Edge[] copyArray(Edge[] original, int newLength) {
+        if (original == null) {
+            throw new NullPointerException("Original array cannot be null");
+        }
+        if (newLength < 0) {
+            throw new NegativeArraySizeException("New length cannot be negative");
+        }
+
+        Edge[] newArray = new Edge[newLength];
+
+        int lengthToCopy = (original.length < newLength) ? original.length : newLength;
+
+        for (int i = 0; i < lengthToCopy; i++) {
+            newArray[i] = original[i];
+        }
+
+        return newArray;
+    }
+
     // Method to add a weighted edge to the graph
     public void addEdge(int source, int destination, int weight, boolean bidirectional) {
         // Add edge from source to destination
@@ -35,6 +74,34 @@ class Graph {
             newEdge = new Edge(source, weight);
             newEdge.next = adjacencyList[destination];
             adjacencyList[destination] = newEdge;
+        }
+    }
+
+    public void removeEdge(int source, int destination, boolean bidirectional) {
+        Edge current = adjacencyList[source];
+        while (current != null) {
+            if (current.vertex == destination) {
+                adjacencyList[source] = current.next;
+                break;
+            }
+            if (current.next != null && current.next.vertex == destination) {
+                current.next = current.next.next;
+            }
+            current = current.next;
+        }
+
+        if (bidirectional) {
+            current = adjacencyList[destination];
+            while (current != null) {
+                if (current.vertex == source) {
+                    adjacencyList[destination] = current.next;
+                    break;
+                }
+                if (current.next != null && current.next.vertex == source) {
+                    current.next = current.next.next;
+                }
+                current = current.next;
+            }
         }
     }
 
@@ -54,7 +121,9 @@ class Graph {
     public void calculateShortestPaths(int start) {
         int[] distances = new int[vertices * 2];
         for(int i = 0; i < vertices; i++) {
-            distances[i] = Integer.MAX_VALUE;
+            if (adjacencyList[i] != null) {
+                distances[i] = Integer.MAX_VALUE;
+            }
         }
         distances[start] = 0;
 
@@ -81,6 +150,17 @@ class Graph {
     }
 
     public static void main(String[] args) {
+        Graph unweightedGraph = new Graph(6);
+        unweightedGraph.addEdge(0, 1, 1, true);
+        unweightedGraph.addEdge(0, 2, 1 ,true);
+        unweightedGraph.addEdge(3, 1, 1, true);
+        unweightedGraph.addEdge(2, 3, 1, true);
+        unweightedGraph.addEdge(3, 4, 1, true);
+        unweightedGraph.addEdge(4, 5, 1, true);
+
+        unweightedGraph.calculateShortestPaths(0);
+        System.out.println();
+
         Graph graph = new Graph(6);
         graph.addEdge(0, 1, 4, true);
         graph.addEdge(0, 2, 3 ,true);
@@ -92,14 +172,16 @@ class Graph {
         graph.calculateShortestPaths(0);
         System.out.println();
 
-        Graph unweightedGraph = new Graph(6);
-        unweightedGraph.addEdge(0, 1, 1, true);
-        unweightedGraph.addEdge(0, 2, 1 ,true);
-        unweightedGraph.addEdge(3, 1, 1, true);
-        unweightedGraph.addEdge(2, 3, 1, true);
-        unweightedGraph.addEdge(3, 4, 1, true);
-        unweightedGraph.addEdge(4, 5, 1, true);
+        graph.printGraph();
+        graph.removeEdge(2, 3, true);
+        graph.printGraph();
+        System.out.println();
 
-        unweightedGraph.calculateShortestPaths(0);
+        graph.printGraph();
+        graph.addVertex(10);
+        graph.addEdge(5, 10, 9, true);
+        graph.printGraph();
+        graph.removeVertex(10);
+        graph.printGraph();
     }
 }
