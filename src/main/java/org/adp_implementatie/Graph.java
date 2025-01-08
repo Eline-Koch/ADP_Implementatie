@@ -60,6 +60,7 @@ class Graph {
 
         distances = calculateDirectPaths(start, distances);
 
+        System.out.println("Starting vertex: " + start);
         System.out.println("Distances: " + Arrays.toString(Arrays.copyOfRange(distances, 0, vertices)));
         System.out.println("Previous vertices: " + Arrays.toString(Arrays.copyOfRange(distances, vertices, vertices * 2)));
     }
@@ -67,14 +68,15 @@ class Graph {
     public int[] calculateDirectPaths(int start, int[] distances) {
         Edge currentEdge = adjacencyList[start];
         while (!(currentEdge == null)) {
-
             if (currentEdge.weight + distances[start] < distances[currentEdge.vertex]) {
                 distances[currentEdge.vertex + vertices] = start;
                 distances[currentEdge.vertex] = currentEdge.weight + distances[start];
+
                 distances = calculateDirectPaths(currentEdge.vertex, distances);
             }
             currentEdge = currentEdge.next;
         }
+
         return distances;
     }
 
@@ -88,6 +90,7 @@ class Graph {
         graph.addEdge(4, 5, 6, true);
 
         graph.calculateShortestPaths(0);
+        System.out.println();
 
         Graph unweightedGraph = new Graph(6);
         unweightedGraph.addEdge(0, 1, 1, true);
