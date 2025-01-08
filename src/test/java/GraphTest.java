@@ -1,13 +1,10 @@
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.adp_implementatie.MergeSort;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 public class GraphTest {
@@ -28,7 +25,9 @@ public class GraphTest {
             String key = entry.getKey();
             Object[] value = entry.getValue();
             System.out.println("key: " + key);
-            System.out.println("value " + Arrays.toString(value));
+            for (int i = 0; i < value.length; i++) {
+                System.out.println(value[i]);
+            }
         }
     }
 }
