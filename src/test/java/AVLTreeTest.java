@@ -23,29 +23,51 @@ public class AVLTreeTest {
         System.out.println("Start met AVLTree Insert test (aflopend):");
         testInsertAVLTreeDescending(100000);
 
-        System.out.println("Start met AVLTree Insert test (oplopen):");
-        testInsertAVLTreeAscending(100000);
+        System.out.println("Start met AVLTree Remove test (oplopen):");
+        testRemoveAVLTreeAscending(100000);
 
-        System.out.println("Start met AVLTree Insert test (aflopend):");
-        testInsertAVLTreeDescending(100000);
-        System.out.println("Start met AVLTree Insert test (oplopen):");
-        testInsertAVLTreeAscending(100000);
+        System.out.println("Start met AVLTree Remove test (aflopend):");
+        testRemoveAVLTreeDescending(100000);
+    }
 
-        System.out.println("Start met AVLTree Insert test (aflopend):");
-        testInsertAVLTreeDescending(100000);
-        System.out.println("Start met AVLTree Insert test (oplopen):");
-        testInsertAVLTreeAscending(100000);
+    public static void testRemoveAVLTreeAscending(int numberOfElements) {
+        PerformanceBenchmark benchmark = new PerformanceBenchmark();
+        AVLTree<Integer> avlTree = new AVLTree<>();
 
-        System.out.println("Start met AVLTree Insert test (aflopend):");
-        testInsertAVLTreeDescending(100000);
-        System.out.println("Start met AVLTree Insert test (oplopen):");
-        testInsertAVLTreeAscending(100000);
+        // Voeg elementen toe in oplopende volgorde
+        for (int i = 0; i < numberOfElements; i++) {
+            avlTree.insert(i + 1);
+        }
 
-        System.out.println("Start met AVLTree Insert test (aflopend):");
-        testInsertAVLTreeDescending(100000);
-//        test.findFunctionalityTest();
-//        test.findMinMaxTest();
-//        test.performanceTest();
+        benchmark.start();
+        for (int i = 0; i < numberOfElements; i++) {
+            avlTree.remove(i + 1); // Verwijder elementen in oplopende volgorde
+        }
+        benchmark.stop();
+
+        System.out.println("AVLTree Remove tijd (oplopen) voor " + numberOfElements + " elementen: "
+                + benchmark.formatElapsedTime(benchmark.getElapsedTimeInSeconds()) + " seconden");
+        System.out.println();
+    }
+
+    public static void testRemoveAVLTreeDescending(int numberOfElements) {
+        PerformanceBenchmark benchmark = new PerformanceBenchmark();
+        AVLTree<Integer> avlTree = new AVLTree<>();
+
+        // Voeg elementen toe in aflopende volgorde
+        for (int i = numberOfElements; i > 0; i--) {
+            avlTree.insert(i);
+        }
+
+        benchmark.start();
+        for (int i = numberOfElements; i > 0; i--) {
+            avlTree.remove(i); // Verwijder elementen in aflopende volgorde
+        }
+        benchmark.stop();
+
+        System.out.println("AVLTree Remove tijd (aflopend) voor " + numberOfElements + " elementen: "
+                + benchmark.formatElapsedTime(benchmark.getElapsedTimeInSeconds()) + " seconden");
+        System.out.println();
     }
 
     public void performDataSetTest() throws IOException {
