@@ -1,14 +1,14 @@
 package org.adp_implementatie;
 
-public class AVLTree {
+public class AVLTree<T extends Comparable<T>> {
 
     // Knooppuntklasse
-    class Node {
-        int value;
+    public class Node {
+        public T value;
         Node left, right;
         int height;
 
-        Node(int value) {
+        Node(T value) {
             this.value = value;
             this.height = 1; // Nieuwe knopen hebben een hoogte van 1
         }
@@ -61,18 +61,18 @@ public class AVLTree {
     }
 
     // Insert-functie
-    public void insert(int value) {
+    public void insert(T value) {
         root = insert(root, value);
     }
 
-    private Node insert(Node node, int value) {
+    private Node insert(Node node, T value) {
         // Standaard BST-invoeging
         if (node == null) {
             return new Node(value);
         }
-        if (value < node.value) {
+        if (value.compareTo(node.value) < 0) {
             node.left = insert(node.left, value);
-        } else if (value > node.value) {
+        } else if (value.compareTo(node.value) > 0) {
             node.right = insert(node.right, value);
         } else {
             return node; // Geen duplicaten toegestaan
@@ -85,17 +85,17 @@ public class AVLTree {
         int balance = getBalance(node);
 
         // Balans herstellen met rotaties
-        if (balance > 1 && value < node.left.value) {
+        if (balance > 1 && value.compareTo(node.left.value) < 0) {
             return rightRotate(node); // Links-links case
         }
-        if (balance < -1 && value > node.right.value) {
+        if (balance < -1 && value.compareTo(node.right.value) > 0) {
             return leftRotate(node); // Rechts-rechts case
         }
-        if (balance > 1 && value > node.left.value) {
+        if (balance > 1 && value.compareTo(node.left.value) > 0) {
             node.left = leftRotate(node.left); // Links-rechts case
             return rightRotate(node);
         }
-        if (balance < -1 && value < node.right.value) {
+        if (balance < -1 && value.compareTo(node.right.value) < 0) {
             node.right = rightRotate(node.right); // Rechts-links case
             return leftRotate(node);
         }
@@ -104,22 +104,22 @@ public class AVLTree {
     }
 
     // Find-functie
-    public Node find(int value) {
+    public Node find(T value) {
         return find(root, value);
     }
 
-    private Node find(Node node, int value) {
-        if (node == null || node.value == value) {
+    private Node find(Node node, T value) {
+        if (node == null || node.value.equals(value)) {
             return node;
         }
-        if (value < node.value) {
+        if (value.compareTo(node.value) < 0) {
             return find(node.left, value);
         }
         return find(node.right, value);
     }
 
     // FindMin-functie
-    public int findMin() {
+    public T findMin() {
         if (root == null) throw new IllegalStateException("Boom is leeg");
         return findMin(root).value;
     }
@@ -132,7 +132,7 @@ public class AVLTree {
     }
 
     // FindMax-functie
-    public int findMax() {
+    public T findMax() {
         if (root == null) throw new IllegalStateException("Boom is leeg");
         return findMax(root).value;
     }
@@ -145,19 +145,19 @@ public class AVLTree {
     }
 
     // Remove-functie
-    public void remove(int value) {
+    public void remove(T value) {
         root = remove(root, value);
     }
 
-    private Node remove(Node node, int value) {
+    private Node remove(Node node, T value) {
         if (node == null) {
             return null;
         }
 
         // Standaard BST-verwijdering
-        if (value < node.value) {
+        if (value.compareTo(node.value) < 0) {
             node.left = remove(node.left, value);
-        } else if (value > node.value) {
+        } else if (value.compareTo(node.value) > 0) {
             node.right = remove(node.right, value);
         } else {
             // Knooppunt gevonden
@@ -215,7 +215,7 @@ public class AVLTree {
 
     // Main-methode voor testen
     public static void main(String[] args) {
-        AVLTree tree = new AVLTree();
+        AVLTree<Integer> tree = new AVLTree<>();
         tree.insert(10);
         tree.insert(20);
         tree.insert(30);
