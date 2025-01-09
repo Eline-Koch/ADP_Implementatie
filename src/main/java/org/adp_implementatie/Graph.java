@@ -137,6 +137,7 @@ public class Graph {
         for(int i = 0; i < vertices; i++) {
             if (adjacencyList[i] != null) {
                 distances[i] = Integer.MAX_VALUE;
+                distances[i + vertices] = -1;
             }
         }
         distances[start] = 0;
