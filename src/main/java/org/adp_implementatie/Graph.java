@@ -2,7 +2,7 @@ package org.adp_implementatie;
 
 import java.util.Arrays;
 
-class Graph {
+public class Graph {
     private int vertices; // Number of vertices
     private Edge[] adjacencyList; // Array of adjacency lists for the graph
 
