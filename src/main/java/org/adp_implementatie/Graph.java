@@ -77,6 +77,20 @@ public class Graph {
         }
     }
 
+    public void addEdge(int source, int destination, boolean bidirectional) {
+        // Add edge from source to destination
+        Edge newEdge = new Edge(destination, 1);
+        newEdge.next = adjacencyList[source];
+        adjacencyList[source] = newEdge;
+
+        // Add edge from destination to source (for undirected graph)
+        if (bidirectional) {
+            newEdge = new Edge(source, 1);
+            newEdge.next = adjacencyList[destination];
+            adjacencyList[destination] = newEdge;
+        }
+    }
+
     public void removeEdge(int source, int destination, boolean bidirectional) {
         Edge current = adjacencyList[source];
         while (current != null) {
@@ -151,12 +165,12 @@ public class Graph {
 
     public static void main(String[] args) {
         Graph unweightedGraph = new Graph(6);
-        unweightedGraph.addEdge(0, 1, 1, true);
-        unweightedGraph.addEdge(0, 2, 1 ,true);
-        unweightedGraph.addEdge(3, 1, 1, true);
-        unweightedGraph.addEdge(2, 3, 1, true);
-        unweightedGraph.addEdge(3, 4, 1, true);
-        unweightedGraph.addEdge(4, 5, 1, true);
+        unweightedGraph.addEdge(0, 1, true);
+        unweightedGraph.addEdge(0, 2, true);
+        unweightedGraph.addEdge(3, 1, true);
+        unweightedGraph.addEdge(2, 3, true);
+        unweightedGraph.addEdge(3, 4, true);
+        unweightedGraph.addEdge(4, 5, true);
 
         unweightedGraph.calculateShortestPaths(0);
         System.out.println();
