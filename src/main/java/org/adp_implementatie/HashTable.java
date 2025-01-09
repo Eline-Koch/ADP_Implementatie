@@ -4,7 +4,7 @@ import java.nio.charset.Charset;
 
 public class HashTable {
 
-    private static final int INITIAL_CAPACITY = 17; // Prime number as initial capacity
+    private static final int INITIAL_CAPACITY = 17;
     private static final double LOAD_FACTOR_THRESHOLD = 0.4;
     private static final Entry DELETED = new Entry(null, null);
 
@@ -26,7 +26,6 @@ public class HashTable {
         }
     }
 
-    // Hash function
     private int hash(String key) {
         int product = 1;
         for (int i = 0; i < key.length(); i++) {
@@ -37,7 +36,6 @@ public class HashTable {
         return product;
     }
 
-    // Put method with quadratic probing
     public void insert(String key, Integer value) {
         if (key == null) throw new IllegalArgumentException("Key cannot be null");
 
@@ -48,29 +46,25 @@ public class HashTable {
         int index = hash(key);
         int i = 0;
 
-        // Quadratic probing to find a slot
         while (table[(index + i * i) % table.length] != null && table[(index + i * i) % table.length] != DELETED) {
             int probeIndex = (index + i * i) % table.length;
             if (table[probeIndex].key.equals(key)) {
-                table[probeIndex].value = value; // Update the value if key exists
+                table[probeIndex].value = value;
                 return;
             }
             i++;
         }
 
-        // Insert the new key-value pair
         table[(index + i * i) % table.length] = new Entry(key, value);
         size++;
     }
 
-    // Get method with quadratic probing
     public Integer get(String key) {
         if (key == null) throw new IllegalArgumentException("Key cannot be null");
 
         int index = hash(key);
         int i = 0;
 
-        // Quadratic probing to find the key
         while (table[(index + i * i) % table.length] != null && table[(index + i * i) % table.length] != DELETED) {
             int probeIndex = (index + i * i) % table.length;
             if (table[probeIndex].key.equals(key)) {
@@ -79,10 +73,9 @@ public class HashTable {
             i++;
         }
 
-        return null; // Key not found
+        return null;
     }
 
-    // Remove method with quadratic probing
     public void delete(String key) {
         if (key == null) throw new IllegalArgumentException("Key cannot be null");
 
@@ -93,7 +86,6 @@ public class HashTable {
         int index = hash(key);
         int i = 0;
 
-        // Quadratic probing to find the key
         while (table[(index + i * i) % table.length] != null && table[(index + i * i) % table.length] != DELETED) {
             int probeIndex = (index + i * i) % table.length;
             if (table[probeIndex].key.equals(key)) {
@@ -111,7 +103,6 @@ public class HashTable {
         int index = hash(key);
         int i = 0;
 
-        // Quadratic probing to find the key
         while (table[(index + i * i) % table.length] != null && table[(index + i * i) % table.length] != DELETED) {
             int probeIndex = (index + i * i) % table.length;
             if (table[probeIndex].key.equals(key)) {
@@ -121,10 +112,9 @@ public class HashTable {
             i++;
         }
 
-        return null; // Key not found
+        return null;
     }
 
-    // Resize the table when the load factor exceeds the threshold
     private void upsize() {
         Entry[] oldTable = table;
         table = new Entry[nextPrime(oldTable.length * 2)];
@@ -149,7 +139,6 @@ public class HashTable {
         }
     }
 
-    // Utility method to find the next prime number greater than the given number
     private int nextPrime(int n) {
         while (true) {
             if (isPrime(n)) {
@@ -159,7 +148,6 @@ public class HashTable {
         }
     }
 
-    // Utility method to check if a number is prime
     private boolean isPrime(int n) {
         if (n <= 1) return false;
         if (n <= 3) return true;
@@ -174,7 +162,6 @@ public class HashTable {
         return size;
     }
 
-    // Utility method to print the current state of the hash map
     public void printTable() {
         System.out.println("HashMap contents:");
         for (int i = 0; i < table.length; i++) {
@@ -187,13 +174,11 @@ public class HashTable {
         }
     }
 
-    // Main method for testing
     public static void main(String[] args) {
-        //Quadratic probing example, size = 17
         HashTable hashTable = new HashTable();
-        hashTable.insert("P", 1); //ASCII: 80
-        hashTable.insert("a", 2); //ASCII: 97 (80 + 17) index + 1
-        hashTable.insert("r", 3); //ASCII: 114 (97 + 17) index + 4
+        hashTable.insert("P", 1);
+        hashTable.insert("a", 2);
+        hashTable.insert("r", 3);
         hashTable.delete("r");
         hashTable.printTable();
         System.out.println();

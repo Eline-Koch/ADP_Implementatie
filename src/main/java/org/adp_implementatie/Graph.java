@@ -3,8 +3,8 @@ package org.adp_implementatie;
 import java.util.Arrays;
 
 public class Graph {
-    private int vertices; // Number of vertices
-    private Edge[] adjacencyList; // Array of adjacency lists for the graph
+    private int vertices;
+    private Edge[] adjacencyList;
 
     public Graph(int vertices) {
         this.vertices = vertices;
@@ -62,14 +62,11 @@ public class Graph {
         return newArray;
     }
 
-    // Method to add a weighted edge to the graph
     public void addEdge(int source, int destination, int weight, boolean bidirectional) {
-        // Add edge from source to destination
         Edge newEdge = new Edge(destination, weight);
         newEdge.next = adjacencyList[source];
         adjacencyList[source] = newEdge;
 
-        // Add edge from destination to source (for undirected graph)
         if (bidirectional) {
             newEdge = new Edge(source, weight);
             newEdge.next = adjacencyList[destination];
@@ -78,12 +75,10 @@ public class Graph {
     }
 
     public void addEdge(int source, int destination, boolean bidirectional) {
-        // Add edge from source to destination
         Edge newEdge = new Edge(destination, 1);
         newEdge.next = adjacencyList[source];
         adjacencyList[source] = newEdge;
 
-        // Add edge from destination to source (for undirected graph)
         if (bidirectional) {
             newEdge = new Edge(source, 1);
             newEdge.next = adjacencyList[destination];
@@ -119,7 +114,6 @@ public class Graph {
         }
     }
 
-    // Method to display the graph
     public void printGraph() {
         System.out.println("Graph Representation (Adjacency List):");
         for (int i = 0; i < vertices; i++) {

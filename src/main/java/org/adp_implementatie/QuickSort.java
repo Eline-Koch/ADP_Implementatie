@@ -1,12 +1,10 @@
 package org.adp_implementatie;
 public class QuickSort<E extends Comparable<E>> {
 
-    // Publieke methode om quicksort te starten
     public void sort(E[] array) {
         quickSort(array, 0, array.length - 1);
     }
 
-    // Recursieve quicksort-methode
     private void quickSort(E[] array, int low, int high) {
         if (low < high) {
             int pivotIndex = partition(array, low, high);
@@ -15,9 +13,7 @@ public class QuickSort<E extends Comparable<E>> {
         }
     }
 
-    // Partitioneer de array rond de pivot
     private int partition(E[] array, int low, int high) {
-        // Kies de pivot met de median of three methode
         E pivot = medianOfThree(array, low, high);
         int i = low - 1;
 
@@ -28,16 +24,13 @@ public class QuickSort<E extends Comparable<E>> {
             }
         }
 
-        // Zet de pivot op de juiste positie
         swap(array, i + 1, high);
         return i + 1;
     }
 
-    // Median of Three methode
     private E medianOfThree(E[] array, int low, int high) {
         int mid = low + (high - low) / 2;
 
-        // Sorteer de waarden van low, mid en high
         if (array[low].compareTo(array[mid]) > 0) {
             swap(array, low, mid);
         }
@@ -48,19 +41,16 @@ public class QuickSort<E extends Comparable<E>> {
             swap(array, mid, high);
         }
 
-        // Zet de mediaan (mid) op de high-positie
         swap(array, mid, high);
         return array[high];
     }
 
-    // Hulpmethode om twee elementen in de array te wisselen
     private void swap(E[] array, int i, int j) {
         E temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
 
-    // Test de implementatie
     public static void main(String[] args) {
         QuickSort<Integer> quickSort = new QuickSort<>();
         QuickSort<String> quickSort2 = new QuickSort<>();
@@ -79,7 +69,6 @@ public class QuickSort<E extends Comparable<E>> {
         printArray(array2);
     }
 
-    // Hulpmethode om een array af te drukken
     public static <E> void printArray(E[] array) {
         for (E element : array) {
             System.out.print(element + " ");

@@ -20,10 +20,8 @@ public class MergeSort<E extends Comparable<E>> {
     }
 
     public void merge(E[] array, E[] tmpArray, int leftStart, int rightStart, int rightEnd) {
-        // Initial indexes of the subarrays
         int i = leftStart, j = rightStart, k = 0;
 
-        // Merge the two subarrays into temp
         while (i < rightStart && j <= rightEnd) {
             if (array[i].compareTo(array[j]) < 0) {
                 tmpArray[leftStart + k] = array[i];
@@ -35,14 +33,12 @@ public class MergeSort<E extends Comparable<E>> {
             k++;
         }
 
-        // Copy remaining elements of the left subarray if any
         while (i < rightStart) {
             tmpArray[leftStart + k] = array[i];
             i++;
             k++;
         }
 
-        // Copy remaining elements of the right subarray if any
         while (j <= rightEnd) {
             tmpArray[leftStart + k] = array[j];
             j++;
